@@ -17,3 +17,26 @@ Security-Enhanced Linux is a security layer built mixed with the kernel in some 
 It uses security policies, a set of rules for deciding what can and can not be accessed, to enforce the entry allowed by a policy. In a situation where a subject, term used to categorized applications or processess, makes a request to access an object, for example a file or a directory, SELinux guarantee such subject has the permission to modify, read or write such object by checking the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-introduction-selinux_architecture">access vector cache</a> (AVC). The said permissions context are loaded into a cache at boot time.
 
 SELinux can run in three different modes of operation. The default is the enforcing mode, the recommended mode, where the policies apllied follow the labels loaded in cache. The <code>setenforce</code>
+
+## Create and manage new users and groups
+
+<code>useradd <username></code>
+
+The -u flag can be used to set an specific user ID number.
+
+<code>passwrd <username></code>
+
+The command above is used to set a user's password.
+
+<code>usermod -a -G <groupname> <username></code>
+
+The command above is used to add an user to a group. The -a flag stands for append and the -G flag tells the usermod command that the you want to edit groups.
+
+<code>groupadd <groupname></code>
+
+The above command is used to create a new group.
+
+## Manage sudo access commands
+
+<code>visudo</code> command opens the /etc/sudoers file in our system where you can edit for specific permissions and configuration.
+
