@@ -20,13 +20,15 @@ SELinux can run in three different modes of operation. The default is the enforc
 
 ## Create and manage new users and groups
 
-<code>useradd <username></code>
+<code>useradd -u 4242 -d /home/<username> -m <username></code>
 
-The -u flag can be used to set an specific user ID number.
+Some useful flags are the -u flag to set an specific user ID number, the -d flag sets the path of the home directory for the new user and -m creates the home directory. More flags can be view with the usual --help flag.
 
-<code>passwrd <username></code>
+<code>passwd <username></code>
 
-The command above is used to set a user's password.
+The command above is used to set a user's password. Follow the prompt instructions, later I will show how to customize the rules for strong password policy and add custom messages.
+
+You can verify the existing groups in your server with the following command <code>cat /etc/group</code>.
 
 <code>usermod -a -G <groupname> <username></code>
 
@@ -40,3 +42,6 @@ The above command is used to create a new group.
 
 <code>visudo</code> command opens the /etc/sudoers file in our system where you can edit for specific permissions and configuration.
 
+## Hostname
+
+<code>hostnamectl <newhostname></code>
