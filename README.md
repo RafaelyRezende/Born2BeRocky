@@ -45,3 +45,9 @@ The above command is used to create a new group.
 ## Hostname
 
 <code>hostnamectl <newhostname></code>
+
+## Partitions
+
+After setting up the virtual machine to use the Rocky 9.5 minimal iso and the memory size given to the new virtual machine, enter the text mode of instalation. To do so press <italic>Tab</italic> and type <code>inst.text</code>.
+
+This will lead you to a menu, choose the text
