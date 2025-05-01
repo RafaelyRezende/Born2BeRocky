@@ -6,9 +6,17 @@
 
 This is a guide through the essential concepts and steps to completing 42 project Born2beroot with Rocky Linux.
 
-<a href="https://rockylinux.org/">Rocky Linux</a> is a distribution that stems from CentOS since its discontinued development. The original co-founder of <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> took on the responsability of carrying on the initial goal of a community-driven, enterprise level operating system for development. The project is now hosted by <a href="https://www.resf.org/about">Rocky Enterprise Software Foundation</a>.
+<a href="https://rockylinux.org/">Rocky Linux</a> is a distribution stems from CentOS since its discontinued development. The original co-founder of <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> took on the responsability of carrying on the initial goal of a community-driven, enterprise level operating system for development. The project is now hosted by <a href="https://www.resf.org/about">Rocky Enterprise Software Foundation</a>.
 
 Rocky established itself as a downstream build of its upstream vendor <a href="https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux">Red Hat Enterprise Linux</a>.
+
+### Rocky OS Install
+
+The installation ISO can be found at the Rocky OS website under the section of default images. Download Rocky Linux 9.5 minimal ISO (the checksum can be used to verify the integrity of the installation).
+
+On the virtual machine software of you choice (this guide will use Oracle VirtualBox) create a new virtual machine, choose the name, select the directory of you choice to save the VM files and finally select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'. 
+
+In the 'Hardware' section, select the amount of base memory fot the virtual machine and the amount of processors you want to use.
 
 ### SELinux
 
@@ -18,7 +26,7 @@ It uses security policies, a set of rules for deciding what can and can not be a
 
 SELinux can run in three different modes of operation. The default is the enforcing mode, the recommended mode, where the policies apllied follow the labels loaded in cache. The <code>setenforce</code>
 
-## Create and manage new users and groups
+### Create and manage new users and groups
 
 <code>useradd -u 4242 -d /home/<username> -m <username></code>
 
