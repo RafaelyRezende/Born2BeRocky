@@ -16,8 +16,10 @@ The installation ISO can be found at the Rocky OS website under the section of d
 
 On the virtual machine software of your choice (this guide will use Oracle VirtualBox), Figure 0, create a new virtual machine, choose the name, select the directory to save the VM files and select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'.
 
-<img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/01-VM.png" width=50% height=50% alt="Create Virtual Machine VirtualBox menu">
-<figcaption>Figure 0.</figcaption>
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/01-VM.png" width=50% height=50% alt="Create Virtual Machine VirtualBox menu">
+  <figcaption>Figure 0.</figcaption>
+</p>
 
 In the 'Hardware' section, select the amount of base memory for the virtual machine and the amount of processors you want to use. Next, in the 'Virtual Hard Disk' create a virtual hard disk with the amount specified in the subject <strong>(this size will change in case you choose to make the bonus)</strong>. Take some time to do the final check of the specifications of the VM and finish the creation.
 
