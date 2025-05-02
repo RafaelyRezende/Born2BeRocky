@@ -19,7 +19,7 @@ On the virtual machine software of your choice (this guide will use Oracle Virtu
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/01-VM.png" width=50% height=50% alt="Create Virtual Machine VirtualBox menu">
 </p>
-<p laign="center">
+<p align="center">
     <em>Figure 0.</em>
 </p>
 
