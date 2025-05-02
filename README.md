@@ -16,7 +16,7 @@ The installation ISO can be found at the Rocky OS website under the section of d
 
 On the virtual machine software of your choice (this guide will use Oracle VirtualBox), Figure 0, create a new virtual machine, choose the name, select the directory to save the VM files and select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'.
 
-![VirtualBox Create Virtual Machine](rocky_guide/01-VM.png)
+<img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/01-VM.png" width=50% height=50%>
 
 <italic>Figure 1</italic>
 
