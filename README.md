@@ -17,7 +17,7 @@ The installation ISO can be found at the Rocky OS website under the section of d
 On the virtual machine software of your choice (this guide will use Oracle VirtualBox), Figure 0, create a new virtual machine, choose the name, select the directory to save the VM files and select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'.
 
 <p align="center">
-  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/02-VM.png" width=50% height=50% alt="Create Virtual Machine VirtualBox menu">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/02-VMsetup.png" width=50% height=50% alt="Create Virtual Machine VirtualBox menu">
 </p>
 <p align="center">
     <em>Figure 0.</em>
@@ -26,7 +26,7 @@ On the virtual machine software of your choice (this guide will use Oracle Virtu
 In the 'Hardware' section (Figure 1), select the amount of base memory for the virtual machine and the amount of processors you want to use. 
 
 <p align="center">
-  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/03-VM.png" width=50% height=50% alt="VirtualBox hardware menu">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/03-VMsetup.png" width=50% height=50% alt="VirtualBox hardware menu">
 </p>
 <p align="center">
     <em>Figure 1.</em>
@@ -35,7 +35,7 @@ In the 'Hardware' section (Figure 1), select the amount of base memory for the v
 Next in the 'Virtual Hard Disk' shown in Figure 2, create a virtual hard disk with the amount specified in the subject <strong>(this size will change in case you choose to make the bonus)</strong>. Take some time to do the final check of the specifications for the VM and finish the creation.
 
 <p align="center">
-  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/04-VM.png" width=50% height=50% alt="VirtualBox Virtual Hard Disk menu">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/04-VMsetup.png" width=50% height=50% alt="VirtualBox Virtual Hard Disk menu">
 </p>
 <p align="center">
     <em>Figure 2.</em>
