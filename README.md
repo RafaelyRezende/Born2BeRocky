@@ -46,7 +46,7 @@ Next in the 'Virtual Hard Disk' shown in Figure 2, create a virtual hard disk wi
 The partition scheme, as per the bonus section, must have one primary partition and an extended partition for the logical volume groups, Figure 3.
 
 <p align="center">
-  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/partitionsqueme.png" width=50% height=50% alt="Partition Scheme">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/partionsqueme.png" width=50% height=50% alt="Partition Scheme">
 </p>
 <p align="center">
     <em>Figure 3.</em>
