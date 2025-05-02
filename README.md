@@ -14,9 +14,9 @@ Rocky established itself as a downstream build of its upstream vendor <a href="h
 
 The installation ISO can be found at the Rocky OS website under the section of default images. Download Rocky Linux 9.5 minimal ISO (the checksum can be used to verify the integrity of the installation).
 
-On the virtual machine software of you choice (this guide will use Oracle VirtualBox) create a new virtual machine, choose the name, select the directory of you choice to save the VM files and finally select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'. 
+On the virtual machine software of your choice (this guide will use Oracle VirtualBox) create a new virtual machine, choose the name, select the directory to save the VM files and select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'. 
 
-In the 'Hardware' section, select the amount of base memory fot the virtual machine and the amount of processors you want to use.
+In the 'Hardware' section, select the amount of base memory for the virtual machine and the amount of processors you want to use.
 
 ### SELinux
 
