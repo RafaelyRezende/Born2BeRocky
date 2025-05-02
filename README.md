@@ -17,15 +17,44 @@ The installation ISO can be found at the Rocky OS website under the section of d
 On the virtual machine software of your choice (this guide will use Oracle VirtualBox), Figure 0, create a new virtual machine, choose the name, select the directory to save the VM files and select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'.
 
 <p align="center">
-  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/01-VM.png" width=50% height=50% alt="Create Virtual Machine VirtualBox menu">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/02-VM.png" width=50% height=50% alt="Create Virtual Machine VirtualBox menu">
 </p>
 <p align="center">
     <em>Figure 0.</em>
 </p>
 
-In the 'Hardware' section, select the amount of base memory for the virtual machine and the amount of processors you want to use. Next, in the 'Virtual Hard Disk' create a virtual hard disk with the amount specified in the subject <strong>(this size will change in case you choose to make the bonus)</strong>. Take some time to do the final check of the specifications of the VM and finish the creation.
+In the 'Hardware' section (Figure 1), select the amount of base memory for the virtual machine and the amount of processors you want to use. 
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/03-VM.png" width=50% height=50% alt="VirtualBox hardware menu">
+</p>
+<p align="center">
+    <em>Figure 1.</em>
+</p>
+
+Next in the 'Virtual Hard Disk' shown in Figure 2, create a virtual hard disk with the amount specified in the subject <strong>(this size will change in case you choose to make the bonus)</strong>. Take some time to do the final check of the specifications for the VM and finish the creation.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/04-VM.png" width=50% height=50% alt="VirtualBox Virtual Hard Disk menu">
+</p>
+<p align="center">
+    <em>Figure 2.</em>
+</p>
 
 ### Disk Partition
+
+The partition scheme, as per the bonus section, must have one primary partition and an extended partition for the logical volume groups, Figure 3.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/partitionsqueme.png" width=50% height=50% alt="Partition Scheme">
+</p>
+<p align="center">
+    <em>Figure 3.</em>
+</p>
+
+The virtual machine has a set amount of primary memory (RAM) and a set amount of secondary memory (hard disk or SSD). The objective is slice the available secondary memory into different sectors that will compartimentalize different parts of the operating system. In order to achieve this goal, first the partitions must be create following a certain partition table, the extended partition must be encrypted and inside it logical volume groups are create to support different directories of the linux file system.
+
+The partitioning scheme used is the legacy Master Boot Record (MBR). This type provides wide compatibility with older systems and has a simple structure to be worked on. MBR has a set number of primary partitions that can be created, no more than 4, and can only support 2 TiB of size disk.
 
 
 
