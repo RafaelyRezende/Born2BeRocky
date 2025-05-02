@@ -8,7 +8,7 @@ This is a guide through the essential concepts and steps to completing 42 projec
 
 <a href="https://rockylinux.org/">Rocky Linux</a> is a distribution stems from CentOS since its discontinued development. The original co-founder of <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> took on the responsability of carrying on the initial goal of a community-driven, enterprise level operating system for development. The project is now hosted by <a href="https://www.resf.org/about">Rocky Enterprise Software Foundation</a>.
 
-Rocky established itself as a downstream build of its upstream vendor <a href="https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux">Red Hat Enterprise Linux</a>.
+Rocky established itself as a downstream build of its upstream vendor <a href="https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux">Red Hat Enterprise Linux</a>. 
 
 ### Rocky OS Install
 
@@ -16,7 +16,11 @@ The installation ISO can be found at the Rocky OS website under the section of d
 
 On the virtual machine software of your choice (this guide will use Oracle VirtualBox) create a new virtual machine, choose the name, select the directory to save the VM files and select the directory with the Rocky ISO image. Check the box fot the 'Skip Unattended Installation'. 
 
-In the 'Hardware' section, select the amount of base memory for the virtual machine and the amount of processors you want to use.
+In the 'Hardware' section, select the amount of base memory for the virtual machine and the amount of processors you want to use. Next, in the 'Virtual Hard Disk' create a virtual hard disk with the amount specified in the subject <strong>(this size will change in case you choose to make the bonus)</strong>. Take some time to do the final check of the specifications of the VM and finish the creation.
+
+### Disk Partition
+
+
 
 ### SELinux
 
