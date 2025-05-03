@@ -43,6 +43,8 @@ Next in the 'Virtual Hard Disk' shown in Figure 2, create a virtual hard disk wi
 
 ### Disk Partition
 
+#### Partitioning Scheme Overview
+
 The partition scheme, as per the bonus section, must have one primary partition and an extended partition for the logical volume groups, Figure 3.
 
 <p align="center">
@@ -54,9 +56,11 @@ The partition scheme, as per the bonus section, must have one primary partition 
 
 The virtual machine has a set amount of primary memory (RAM) and a set amount of secondary memory (hard disk or SSD). The objective is slice the available secondary memory into different sectors that will compartimentalize different parts of the operating system. In order to achieve this goal, first the partitions must be create following a certain partition table, the extended partition must be encrypted and inside it logical volume groups are create to support different directories of the linux file system.
 
-The partitioning scheme used is the legacy Master Boot Record (MBR). This type provides wide compatibility with older systems and has a simple structure to be worked on. MBR has a set number of primary partitions that can be created, no more than 4, and can only support 2 TiB of size disk.
+The partitioning scheme used is the legacy Master Boot Record (MBR). This type provides wide compatibility with older systems and has a simple structure to be worked on. MBR has a set number of primary partitions that can be created, no more than 4, and can only support 2 TiB of size disk which will be more than enough for the pourposes of this project. The up to date, modern standard of partitioning scheme is GUID Partition Table (GPT) with almost every single specification having an upgrade compared to its predecessor MBR. GPT has practically an unlimited amount of partitions that can be created, it is realiable given its system of redundancy checks, it has compatibility with mordern boot firmware such as UEFI and it can manage larger systems with sizes bigger than 2 TiB.
 
+#### File Systems and Mount Point Overview
 
+After the disk has been properly partitioned, the system is ready to have each partition formatted with a file system. 
 
 ### SELinux
 
