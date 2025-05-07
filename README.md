@@ -54,13 +54,19 @@ The partition scheme, as per the bonus section, must have one primary partition 
     <em>Figure 3.</em>
 </p>
 
-The virtual machine has a set amount of primary memory (RAM) and a set amount of secondary memory (hard disk or SSD). The objective is slice the available secondary memory into different sectors that will compartimentalize different parts of the operating system. In order to achieve this goal, first the partitions must be create following a certain partition table, the extended partition must be encrypted and inside it logical volume groups are create to support different directories of the linux file system.
+The virtual machine has a set amount of primary memory (RAM) and a set amount of secondary memory (hard disk or SSD). The objective is slice the available secondary memory into different sectors that will compartimentalize different parts of the operating system. In order to achieve this goal, first the partitions must be create following a certain partition table, the extended partition must be encrypted and inside it, logical volume groups are created to support different directories of the linux filesystem.
 
-The partitioning scheme used is the legacy Master Boot Record (MBR). This type provides wide compatibility with older systems and has a simple structure to be worked on. MBR has a set number of primary partitions that can be created, no more than 4, and can only support 2 TiB of size disk which will be more than enough for the pourposes of this project. The up to date, modern standard of partitioning scheme is GUID Partition Table (GPT) with almost every single specification having an upgrade compared to its predecessor MBR. GPT has practically an unlimited amount of partitions that can be created, it is realiable given its system of redundancy checks, it has compatibility with mordern boot firmware such as UEFI and it can manage larger systems with sizes bigger than 2 TiB.
+The partitioning scheme layout standard used is the legacy Master Boot Record (MBR). This type provides wide compatibility with older systems and has a simple structure to be worked on. MBR has a set number of primary partitions that can be created, no more than 4, and can only support 2 TiB of size disk which will be more than enough for the pourposes of this project. The up to date, modern standard of partitioning scheme is GUID Partition Table (GPT) with almost every single specification having an upgrade compared to its predecessor MBR. GPT has practically an unlimited amount of partitions that can be created, it is realiable given its system of redundancy checks, it has compatibility with mordern boot firmware such as UEFI and it can manage larger systems with sizes bigger than 2 TiB. More information about disk partititons in <a href="https://docs.fedoraproject.org/en-US/fedora/f36/install-guide/appendixes/Disk_Partitions/">here</a> and <a href="https://en.wikipedia.org/wiki/Disk_partitioning">there</a>.
 
-#### File Systems and Mount Point Overview
+#### Filesystems and Mount Point Overview
 
-After the disk has been properly partitioned, the system is ready to have each partition formatted with a file system. 
+After the disk has been properly partitioned, the system is ready to have each partition formatted with a filesystem. Each pool of memory now has to be assigned a filesystem format and a mount point. Linux suppports a wide range of filesystems, each with its own particularities, characteristics and performance according to given task.
+
+Filesystems simply structures the way data is stored, organized, accessed and managed throughout the operating system. It adds redunduncy in the form of journals or logs for the case of sudden crashes or system corruption. It keeps track of the area in which data must be stored and can be used. Also, it implements checksums to verify integrity of the system and file modifications.
+
+This project uses the ext4 filesystem for its stabililty and performance which is enough in this case. The ext4 is flexible which make it suitable for a variety of workloads and file sizes. The current project does not require the management of large storage units, scalability is not the main goal, so the ext4 is the right fit.
+
+Useful content around this topic and other types of filesystems <a href="https://archive.kernel.org/oldwiki/ext4.wiki.kernel.org/index.php/Ext4_Howto.html">here</a> and <a href="https://en.wikipedia.org/wiki/Ext4">there</a>.
 
 ### SELinux
 
