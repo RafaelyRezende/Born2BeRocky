@@ -2,7 +2,7 @@
 
 <br>
 
-### System Administrator Diary
+## System Administrator Diary
 
 This is a guide through the essential concepts and steps to completing 42 project Born2beroot with Rocky Linux.
 
@@ -10,7 +10,7 @@ This is a guide through the essential concepts and steps to completing 42 projec
 
 Rocky established itself as a downstream build of its upstream vendor <a href="https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux">Red Hat Enterprise Linux</a>. 
 
-### Rocky OS Install
+## Rocky OS Install
 
 The installation ISO can be found at the Rocky OS website under the section of default images. Download Rocky Linux 9.5 minimal ISO (the checksum can be used to verify the integrity of the installation).
 
@@ -41,9 +41,9 @@ Next in the 'Virtual Hard Disk' shown in Figure 2, create a virtual hard disk wi
     <em>Figure 2.</em>
 </p>
 
-### Disk Partition
+## Disk Partition
 
-#### Partitioning Scheme Overview
+### Partitioning Scheme Overview
 
 The partition scheme, as per the bonus section, must have one primary partition and an extended partition for the logical volume groups, Figure 3.
 
@@ -59,6 +59,24 @@ The virtual machine has a set amount of primary memory (RAM) and a set amount of
 The partitioning scheme layout standard used is the legacy Master Boot Record (MBR). This type provides wide compatibility with older systems and has a simple structure to be worked on. MBR has a set number of primary partitions that can be created, no more than 4, and can only support 2 TiB of size disk which will be more than enough for the pourposes of this project. The up to date, modern standard of partitioning scheme is GUID Partition Table (GPT) with almost every single specification having an upgrade compared to its predecessor MBR. GPT has practically an unlimited amount of partitions that can be created, it is realiable given its system of redundancy checks, it has compatibility with mordern boot firmware such as UEFI and it can manage larger systems with sizes bigger than 2 TiB. 
 
 More information about disk partititons in <a href="https://docs.fedoraproject.org/en-US/fedora/f36/install-guide/appendixes/Disk_Partitions/">here</a> and <a href="https://en.wikipedia.org/wiki/Disk_partitioning">there</a>.
+
+### Filesystems and Mount Point Overview
+
+After the disk has been properly partitioned, the system is ready to have each partition formatted with a filesystem. Each pool of memory now has to be assigned a filesystem format and a mount point. Linux suppports a wide range of filesystems, each with its own particularities, characteristics and performance according to given task.
+
+Filesystems simply structures the way data is stored, organized, accessed and managed throughout the operating system. It adds redunduncy in the form of journals or logs for the case of sudden crashes or system corruption. It keeps track of the area in which data must be stored and can be used. Also, it implements checksums to verify integrity of the system and file modifications.
+
+This project uses the ext4 filesystem for its stabililty and performance which is enough in this case. The ext4 is flexible which make it suitable for a variety of workloads and file sizes. The current project does not require the management of large storage units, scalability is not the main goal, so the ext4 is the right fit.
+
+Useful content around this topic and other types of filesystems <a href="https://archive.kernel.org/oldwiki/ext4.wiki.kernel.org/index.php/Ext4_Howto.html">here</a> and <a href="https://en.wikipedia.org/wiki/Ext4">there</a>.
+
+### Logical Volume Management
+
+Logical volume management is a device mapper framework that abstracts the physical storage devices on a linux system. Physical memory storage can now be virtualized in virtual block devices, this make possible for the logical volumes to absorb new physical devices to enlarge the systems size or shrink it dynamically.
+
+The layered architecture of the LVM is composed by the physical volume which is the base layer, normally an entire partition. The volume group is the central pool of storage composed of one or more physical volumes, this layer acts a container for the physical volumes. The logical volume is the abstraction created for the operating system to use. The logical volume is a standard block device in the perspective of the OS where mount points can be assigned and formatted with specific file system.
+
+More information on <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/configuring_and_managing_logical_volumes/overview-of-logical-volume-management_configuring-and-managing-logical-volumes#lvm-architecture_overview-of-logical-volume-management">here</a> and <a href="https://en.wikipedia.org/wiki/Device_mapper">there</a>.
 
 ### Disk Setup
 
@@ -132,7 +150,7 @@ Repeat this step for all the logical volumes, <strong>do this in the order as pe
 When all these steps are completed, type <strong>reboot</strong> in the command prompt and enter the guided installation wizard. In the 'Installation Summary' menu, under 'System' select the 'Installation Destination'. Select the checkbox of the manual installation and hit 'Done', this will redirect to the 'Manual Partitioning' menu. If you did every step the correct way, there will be a 'Unknown' header in the 'New Rocky Linux 9.5 Installation' as depicted in Figure 9. Open the header to find the sda1 and sda5 encrypted partition, open the sda5 partition with the password.
 
 <p align="center">
-  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install10.png" width=50% height=50% alt="Installation menu">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install10.png" width=50% height=50% alt="Graphical installation">
 </p>
 <p align="center">
     <em>Figure 9.</em>
@@ -149,15 +167,24 @@ Now all the logical volumes and primary partition can be reformated and mounted 
 
 NOTE: the swap volume has a unique filesystem type.
 
-#### Filesystems and Mount Point Overview
+Create a user <strong>without</strong> administrative powers (this will be set up inside the server) and create a root password for the super user. Begin installation.
 
-After the disk has been properly partitioned, the system is ready to have each partition formatted with a filesystem. Each pool of memory now has to be assigned a filesystem format and a mount point. Linux suppports a wide range of filesystems, each with its own particularities, characteristics and performance according to given task.
+## Inside The Machine
 
-Filesystems simply structures the way data is stored, organized, accessed and managed throughout the operating system. It adds redunduncy in the form of journals or logs for the case of sudden crashes or system corruption. It keeps track of the area in which data must be stored and can be used. Also, it implements checksums to verify integrity of the system and file modifications.
+After the final reboot of the installation, decrypt the disk and enter the user login and password to access the server. At this stage, a serie of actions must be completed to make the server secure and operational with different types of services. A list of the objectives is shown below:
 
-This project uses the ext4 filesystem for its stabililty and performance which is enough in this case. The ext4 is flexible which make it suitable for a variety of workloads and file sizes. The current project does not require the management of large storage units, scalability is not the main goal, so the ext4 is the right fit.
-
-Useful content around this topic and other types of filesystems <a href="https://archive.kernel.org/oldwiki/ext4.wiki.kernel.org/index.php/Ext4_Howto.html">here</a> and <a href="https://en.wikipedia.org/wiki/Ext4">there</a>.
+>  <ol>
+>    <li>Set up SSH service</li>
+>    <li>Change hostname</li>
+>    <li>Implement secure password policy</li>
+>    <li>Set up sudo rules</li>
+>    <li>Create groups and users</li>
+>    <li>Create bash script</li>
+>    <li>Set up lighttpd service</li>
+>    <li>Set up mariadb service</li>
+>    <li>Set up WordPress website</li>
+>    <li>Set up additional service</li>
+>  </ol>
 
 ### SELinux
 
@@ -165,7 +192,13 @@ Security-Enhanced Linux is a security layer built mixed with the kernel in some 
 
 It uses security policies, a set of rules for deciding what can and can not be accessed, to enforce the entry allowed by a policy. In a situation where a subject, term used to categorized applications or processess, makes a request to access an object, for example a file or a directory, SELinux guarantee such subject has the permission to modify, read or write such object by checking the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-introduction-selinux_architecture">access vector cache</a> (AVC). The said permissions context are loaded into a cache at boot time.
 
-SELinux can run in three different modes of operation. The default is the enforcing mode, the recommended mode, where the policies apllied follow the labels loaded in cache. The <code>setenforce</code>
+SELinux can run in three different modes of operation. The default is the enforcing mode, the recommended mode, where the policies apllied follow the labels loaded in cache. Verify the status of SELinux with the command:
+
+<code>getenforce</code>
+
+If the status of SELinux needs to be modified temporarily the following command can be used to set it to different modes of operation, more on <a href="https://www.thegeeksearch.com/how-to-use-setenforce-command-to-change-selinux-modes/">here</a>:
+
+<code>setenforce</code>
 
 ### Create and manage new users and groups
 
