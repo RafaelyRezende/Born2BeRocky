@@ -202,9 +202,17 @@ If the status of SELinux needs to be modified temporarily the following command 
 
 <code>setenforce</code>
 
+### Firewalld
+
 ### SSH
 
+### Hostname
 
+At server installation the default name for the machine is localhost, in order to modify this name use the following command:
+
+<code>hostnamectl set-hostname newhostname</code>
+
+NOTE: A reboot is necessary to see if the changes are permanent.
 
 ### Users and Groups
 
@@ -238,10 +246,12 @@ Add a user to a spcific group with the usermod command utility. This command can
 
 The -a flag stands for append and the -G flag tells the usermod command to edit groups.
 
-## Manage sudo access commands
+### Secure Password Policy
+
+The server must have a strict password policy in place. The passwords in the server must have a maximum number of days in use, a minimum amount of days between password changes and a number of days warning before a password expires. This specifications can be edited in the <i>/etc/login.defs</i>.
+
+Configure the password minimum characters length and other rules in the <i>/etc/security/pwquality.conf</i> directory.
+
+### Manage sudo access commands
 
 <code>visudo</code> command opens the /etc/sudoers file in our system where you can edit for specific permissions and configuration.
-
-## Hostname
-
-<code>hostnamectl <newhostname></code>
