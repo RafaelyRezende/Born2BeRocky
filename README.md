@@ -176,9 +176,9 @@ After the final reboot of the installation, decrypt the disk and enter the user 
 >  <ol>
 >    <li>Set up SSH service</li>
 >    <li>Change hostname</li>
+>    <li>Create groups and users</li>
 >    <li>Implement secure password policy</li>
 >    <li>Set up sudo rules</li>
->    <li>Create groups and users</li>
 >    <li>Create bash script</li>
 >    <li>Set up lighttpd service</li>
 >    <li>Set up mariadb service</li>
@@ -186,11 +186,13 @@ After the final reboot of the installation, decrypt the disk and enter the user 
 >    <li>Set up additional service</li>
 >  </ol>
 
+Before the set up and configuration of the server, some topics will be introduced for better understand and utility in the evaluation of the project.
+
 ### SELinux
 
 Security-Enhanced Linux is a security layer built mixed with the kernel in some GNU/Linux distributions for, you guessed, enhanced security over sensitive data and processes. It was developed in a joint colaboration between linux developers and the National Security Agency (NSA). The feature allows administrators to have advanced and fine granied control over the access and permissions of the system.
 
-It uses security policies, a set of rules for deciding what can and can not be accessed, to enforce the entry allowed by a policy. In a situation where a subject, term used to categorized applications or processess, makes a request to access an object, for example a file or a directory, SELinux guarantee such subject has the permission to modify, read or write such object by checking the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-introduction-selinux_architecture">access vector cache</a> (AVC). The said permissions context are loaded into a cache at boot time.
+It uses <a href="https://en.wikipedia.org/wiki/Mandatory_access_control">Mandatory Access Control</a> (MAC) security policies, a set of rules for deciding what can and can not be accessed, to enforce the policy of entry of allowed users, permissions, services connectivity and more. In a situation where a subject, term used to categorized applications or processess, makes a request to access an object, for example a file or a directory, SELinux guarantee such subject has the permission to modify, read or write such object by checking the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-introduction-selinux_architecture">access vector cache</a> (AVC). The said permissions context are loaded into a cache at boot time.
 
 SELinux can run in three different modes of operation. The default is the enforcing mode, the recommended mode, where the policies apllied follow the labels loaded in cache. Verify the status of SELinux with the command:
 
@@ -200,25 +202,41 @@ If the status of SELinux needs to be modified temporarily the following command 
 
 <code>setenforce</code>
 
-### Create and manage new users and groups
+### SSH
 
-<code>useradd -u 4242 -d /home/<username> -m <username></code>
 
-Some useful flags are the -u flag to set an specific user ID number, the -d flag sets the path of the home directory for the new user and -m creates the home directory. More flags can be view with the usual --help flag.
 
-<code>passwd <username></code>
+### Users and Groups
 
-The command above is used to set a user's password. Follow the prompt instructions, later I will show how to customize the rules for strong password policy and add custom messages.
+This is one of the core requirements for being a system administrator. The operations of create, remove and edit users and groups are essential in managing a server. Start by adding a new user to the server, this can be acomplished by running:
 
-You can verify the existing groups in your server with the following command <code>cat /etc/group</code>.
+<code>useradd -u 4242 -d /home/username -m username</code>
 
-<code>usermod -a -G <groupname> <username></code>
+Some useful flags are the -u flag to set an specific user ID number, the -d flag sets the path of the home directory for the new user (in case the default directory is not desirable) and -m creates the home directory. NOTE: if you want to set up default files/directories inside the user's home directory when creating a new user, add the necessary files in the <i>/etc/skel</i> directory.
 
-The command above is used to add an user to a group. The -a flag stands for append and the -G flag tells the usermod command that the you want to edit groups.
+Together with the username of an user, a password needs to be set in place for the user to access the server. This can be achieved with the command:
 
-<code>groupadd <groupname></code>
+<code>passwd username</code>
 
-The above command is used to create a new group.
+In case the administrator need to delete an user from the server, run the command:
+
+<code>userdel username</code>
+
+By default, this command does not remove the user's home directory, if it is necessary to delete the user's information, together with its directories and files use the -r flag.
+
+Create groups with the following command:
+
+<code>groupadd groupname</code>
+
+View all listed groups and the users inside any specific group in the server by inspecting the <i>/etc/group</i> directory.
+
+<code>cat /etc/group</code>
+
+Add a user to a spcific group with the usermod command utility. This command can do a variety of tasks related to groups and users, if a username have to be changed it is done via usermod. Explore the functionalities of usermod in the <a href="https://www.man7.org/linux/man-pages/man8/usermod.8.html">manual</a> or <a href="https://www.itzgeek.com/how-tos/linux/how-to-modify-user-accounts-in-linux-using-usermod-command.html">here</a>.
+
+<code>usermod -a -G groupname username</code>
+
+The -a flag stands for append and the -G flag tells the usermod command to edit groups.
 
 ## Manage sudo access commands
 
@@ -227,9 +245,3 @@ The above command is used to create a new group.
 ## Hostname
 
 <code>hostnamectl <newhostname></code>
-
-## Partitions
-
-After setting up the virtual machine to use the Rocky 9.5 minimal iso and the memory size given to the new virtual machine, enter the text mode of instalation. To do so press <italic>Tab</italic> and type <code>inst.text</code>.
-
-This will lead you to a menu, choose the text
