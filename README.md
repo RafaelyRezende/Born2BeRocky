@@ -108,9 +108,13 @@ With the partition encrypted, in order to add the logical volume manager (LVM) g
 
 <code>cryptsetup open /dev/sda5 sda5_crypt</code>
 
-Now, the extended partition can be managed to have any logical groups needed. First, create the physical volume in which the logical volumes will reside with the command <code>pvcreate /dev/mapper/sda5_crypt</code>. 
+Now, the extended partition can be managed to have any logical groups needed. First, create the physical volume in which the logical volumes will reside with the command:
 
-Afterwards, create the volume group which the logical volumes will be a part of on top of the newly created physical volume mapper. Use the command <code>vgcreate LVMGroup /dev/mapper/sda5_crypt</code>.
+<code>pvcreate /dev/mapper/sda5_crypt</code>. 
+
+Afterwards, create the volume group which the logical volumes will be a part of on top of the newly created physical volume mapper. Use the command:
+
+<code>vgcreate LVMGroup /dev/mapper/sda5_crypt</code>.
 
 Finally, create all the necessary logical volumes that belong to the LVMGroup. Use the <i>lvcreate</i> command to achieve this goal. The size can be set with the '-L' flag, and the name of the logical volume with the '-n' flag. For example:
 
