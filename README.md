@@ -60,7 +60,55 @@ The partitioning scheme layout standard used is the legacy Master Boot Record (M
 
 More information about disk partititons in <a href="https://docs.fedoraproject.org/en-US/fedora/f36/install-guide/appendixes/Disk_Partitions/">here</a> and <a href="https://en.wikipedia.org/wiki/Disk_partitioning">there</a>.
 
+### Disk Setup
 
+At the start up installation menu (Figure 4), press <i>TAB</i>, type <code>inst.text</code> and press enter. Next, select the text mode and go into the anaconda prompt by pressing <i>alt+tab</i>. 
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install01.png" width=50% height=50% alt="Installation menu">
+</p>
+<p align="center">
+    <em>Figure 4.</em>
+</p>
+
+At the anaconda prompt, use the fdisk command utility to write on the /dev/sda disk (Figure 5).
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install04.png" width=50% height=50% alt="Anaconda prompt">
+</p>
+<p align="center">
+    <em>Figure 5.</em>
+</p>
+
+Inside the fdisk program, type m for the help menu. Afterwards, type n to create a new partition, select it as a primary partition and set the last sector to be +500M as shown in Figure 6. Leave the <i>Partition number</i> as the default, as well as, the first sector. 
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install05.png" width=50% height=50% alt="Create primary partition">
+</p>
+<p align="center">
+    <em>Figure 6.</em>
+</p>
+
+After creating the primary partition where the /boot mount point will live, add another partition, only this time select it as an extended partition.The fdisk program creates a second partition named sda2 of type 'Extended' with all the remaining space available on disk. Create yet another partition with the n command, with all the space allocated to the extended partition sda2, fdisk will add a logical partition, leave again all the fields as the default. Type w to update the partition table. Follow the mentioned steps and check if the process is similar to Figure 7.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install07.png" width=50% height=50% alt="Installation menu">
+</p>
+<p align="center">
+    <em>Figure 7.</em>
+</p>
+
+The sda5 partition needs to be encrypted and for this action use the following command on the anaconda prompt:
+
+<code>cryptsetup -y -v --type luks1 luksFormat /dev/sda5</code>
+
+The command above basically sets the desired type of encryption, luks1 or luks2, on top of the of the sda5 partition. By encrypting the entire partition, the part of the system where potentially critical information is stored will be safe.
+
+With the partition encrypted, in order to add the logical volume manager (LVM) groups it is necessary to open the partition first. This can be achieved with the following command:
+
+<code>cryptsetup open /dev/sda5 sda5_crypt</code>
+
+Now, the extended partition can be managed to have any logical groups needed. First, create the physical volume in which the logical 
 
 #### Filesystems and Mount Point Overview
 
