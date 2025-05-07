@@ -108,7 +108,42 @@ With the partition encrypted, in order to add the logical volume manager (LVM) g
 
 <code>cryptsetup open /dev/sda5 sda5_crypt</code>
 
-Now, the extended partition can be managed to have any logical groups needed. First, create the physical volume in which the logical 
+Now, the extended partition can be managed to have any logical groups needed. First, create the physical volume in which the logical volumes will reside with the command <code>pvcreate /dev/mapper/sda5_crypt</code>. 
+
+Afterwards, create the volume group which the logical volumes will be a part of on top of the newly created physical volume mapper. Use the command <code>vgcreate LVMGroup /dev/mapper/sda5_crypt</code>.
+
+Finally, create all the necessary logical volumes that belong to the LVMGroup. Use the <i>lvcreate</i> command to achieve this goal. The size can be set with the '-L' flag, and the name of the logical volume with the '-n' flag. For example:
+
+<code>lvcreate -L 10G -n root LVMGroup</code>
+
+Repeat this step for all the logical volumes, <strong>do this in the order as per the subject</strong>. Check if the partition is similar to Figure 8 with the <code>lsblk</code> command.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install09.png" width=50% height=50% alt="Final partition table">
+</p>
+<p align="center">
+    <em>Figure 8.</em>
+</p>
+
+When all these steps are completed, type <strong>reboot</strong> in the command prompt and enter the guided installation wizard. In the 'Installation Summary' menu, under 'System' select the 'Installation Destination'. Select the checkbox of the manual installation and hit 'Done', this will redirect to the 'Manual Partitioning' menu. If you did every step the correct way, there will be a 'Unknown' header in the 'New Rocky Linux 9.5 Installation' as depicted in Figure 9. Open the header to find the sda1 and sda5 encrypted partition, open the sda5 partition with the password.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install10.png" width=50% height=50% alt="Installation menu">
+</p>
+<p align="center">
+    <em>Figure 9.</em>
+</p>
+
+Now all the logical volumes and primary partition can be reformated and mounted properly. Select a logical volume, check the 'Reformat' checkbox, edit the 'Mount Point' field and select a filesystem type in the 'File System' field. Press the 'Update Settings' to update the information and repeat for all the logical volumes. The figure below is an example of what to expect:
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install11.png" width=50% height=50% alt="Installation menu">
+</p>
+<p align="center">
+    <em>Figure 10.</em>
+</p>
+
+NOTE: the swap volume has a unique filesystem type.
 
 #### Filesystems and Mount Point Overview
 
