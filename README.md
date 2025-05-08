@@ -188,9 +188,31 @@ After the final reboot of the installation, decrypt the disk and enter the user 
 
 At this point, the virtual machine has a full operating system installed and operational. The VM harness the processing power, memory, disk and other physical resources from the host hardware. "An entire OS-level virtualization enables multiple isolated and secure cirtualized servers to run using only a single physical server" (<a href="https://en.wikipedia.org/wiki/Virtual_machine">source here</a>). Virtual Machine can be defined as:
 
->  "An efficient, isolated duplicate of a real computer machine." - Gerald J. Popek & Robert P. >  Goldberg
+>  "An efficient, isolated duplicate of a real computer machine." - Gerald J. Popek & Robert P. Goldberg.
 
-Before the set up and configuration of the server, some topics will be introduced for better understand and utility in the evaluation of the project.
+Before the set up and configuration of the server, some topics will be introduced for better understand and utility of the project.
+
+___
+
+### Secure Shell
+
+Secure shell (SSH) is a cryptographic communication protocol over insecure mediums. It enable secure remote access to computers and servers, over the internet. This is the service that allow developers to work from home, administer networks and servers from a distance in some third world beach around the world.
+
+The primary goal of SSH is to secure remote login and command execution to a server or network which enable the capacity to manage, transfer and administer services inside the said network/server. This program came to replace the previoius client-server application protocols, such as <a href="https://en.wikipedia.org/wiki/Telnet">Telnet</a>, <a href="https://en.wikipedia.org/wiki/Berkeley_r-commands">rlogin</a> and <a href="https://en.wikipedia.org/wiki/Remote_Shell">rsh</a>. The SSH protocol at its inception in 1995 gain rapid adoption by the community and now stands as the golden standard of secure system administration.
+
+The OpenSSH, a free open-source software (FOSS) implementation, is pre-installed on the majority of Linux distributions including Rocky. The service must be running, normally as server side daemon, which makes it possible for a client (e.g. user's local machine) innitiate a connection over <a href="">Transmission Control Protocol</a> (TCP) to the server on a specific port. The default port for a SSH service is the port 22.
+
+The architecture of SSH is organized as a layered architecture. This design provides modularity, flexibily and clear separation of concerns which contribute to the maintance, robustness and security. There are three main layers that build on top of each other, the first one is the <a href="https://www.rfc-editor.org/rfc/rfc4253">transport layer protocol</a>, the second is the user authentication protocol and the Connection Protocol. 
+
+The first layer provides the low level implementation of communication protocol that provides strong encryption, cryptographic host authentication and integrity protection. The second is used to process client-side requests, by managing password authentication, public key authentication and other forms. And, finally, the <a href="https://www.rfc-editor.org/rfc/rfc4254#section-1">connection protocol</a>, as defined by the Internet Engineering Task Force reference, establishes "interactive login sessions, remote execution of commands, forwarded TCP/IP connections, and forwarded X11 connections. All of these channels are multiplexed into a single encrypted tunnel".
+
+### Firewalld
+
+A firewall is a program that monitors and administer communications send and recieved by a system. It is configured to follow certain rules for the process and flow of communication. This protects the system from unwanted traffic from outside actors and minimizes attack vectors via ports, for example.
+
+The case for <a href="https://firewalld.org/documentation/concepts.html">firewalld</a> comes from its predecessor, iptables. The goal of firewalld is to simplify the complexities of iptables in implementing firewall rules and policy. Firewalld offers a dynamic and user-friendly method to manage firewall rules by using abstractions like zones, binning services which allows a fine grained configuration, and maintain seperate configurations for runtime processes and the rules saved to disk (permanent).
+
+Firewalld comes pre-installed and enabled by default on RHEL distribution and Rocky. The default zone for network interfaces is set to public, normally used in public networks where other computers of the network are not trustworthy. The utility command to manage the firewalld policies and rules is the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/configuring_firewalls_and_packet_filters/using-and-configuring-firewalld_firewall-packet-filters#using-and-configuring-firewalld_firewall-packet-filters">firewall-cmd</a>.
 
 ### SELinux
 
@@ -206,15 +228,11 @@ If the status of SELinux needs to be modified temporarily the following command 
 
 <code>setenforce</code>
 
-### Firewalld
+___
 
-### Secure Shell
+### SSH Setup
 
-Secure shell (SSH) is a cryptographic communication protocol over insecure mediums. It enable secure remote access to computers and servers, over the internet. This is the service that allow developers to work from home, administer networks and servers from a distance in some third world beach around the world.
 
-The primary goal of SSH is to secure remote login and command execution to a server or network which enable the capacity to manage, transfer and administer services inside the said network/server. This program came to replace the previoius client-server application protocols, such as <a href="https://en.wikipedia.org/wiki/Telnet">Telnet</a>, <a href="https://en.wikipedia.org/wiki/Berkeley_r-commands">rlogin</a> and <a href="https://en.wikipedia.org/wiki/Remote_Shell">rsh</a>. The SSH protocol at its inception in 1995 gain rapid adoption by the community and now stands as the golden standard of secure system administration.
-
-The OpenSSH, a free open-source software (FOSS) implementation, is pre-installed on the majority of Linux distributions including Rocky. The service must be running, normally as server side daemon, which makes it possible for a client (e.g. user's local machine) innitiate a connection over <a href="">Transmission Control Protocol</a> (TCP) to the server on a specific port. The default port for a SSH service is the port 22.
 
 ### Hostname
 
