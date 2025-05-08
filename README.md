@@ -355,8 +355,20 @@ The -a flag stands for append and the -G flag tells the usermod command to edit 
 
 The server must have a strict password policy in place. The passwords in the server must have a maximum number of days in use, a minimum amount of days between password changes and a number of days warning before a password expires. This specifications can be edited in the <i>/etc/login.defs</i>.
 
-Configure the password minimum characters length and other rules in the <i>/etc/security/pwquality.conf</i> directory.
+Configure the password minimum characters length and other rules in the <i>/etc/security/pwquality.conf</i> file, follow the instruction in it.
 
-### Manage sudo access commands
+Navigate to the <i>/etc/pam.d/system-auth</i> and <i>/etc/pam.d/password-auth</i> to update the password settings on <strong>both files</strong>. In the following line, add the following instructions:
+
+<code>password    requisite    pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type= minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 difok=3 reject_username enforce_for_root</code>
+
+Modify the following line to enforce history checks.
+
+<code>password    sufficient    pam_unix.so remember=7</code>
+
+NOTE: Reset all the passwords to comply with the new policy and check if the rules are being enforced.
+
+### Sudo Configuration
+
+The policy for the sudo command is editted in the <i></i>
 
 <code>visudo</code> command opens the /etc/sudoers file in our system where you can edit for specific permissions and configuration.
