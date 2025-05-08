@@ -173,26 +173,26 @@ Create a user <strong>without</strong> administrative powers (this will be set u
 
 After the final reboot of the installation, decrypt the disk and enter the user login and password to access the server. At this stage, a serie of actions must be completed to make the server secure and operational with different types of services. A list of the objectives is shown below:
 
-<table border="5">
+<table border="5" align="center">
  <tr>
-    <td>- Set up SSH service</td>
-    <td>- Create bash script</td>
+    <td>1. Set up SSH service</td>
+    <td>6. Create bash script</td>
  </tr>
  <tr>
-    <td>- Change hostname</td>
-    <td>- Set up lighttpd service</td>
+    <td>2. Change hostname</td>
+    <td>7. Set up lighttpd service</td>
  </tr>
  <tr>
-    <td>- Create groups and users</td>
-    <td>- Set up mariadb service</td>
+    <td>3. Create groups and users</td>
+    <td>8. Set up mariadb service</td>
  </tr>
    <tr>
-    <td>- Implement secure password policy</td>
-    <td>- Set up WordPress website</td>
+    <td>4. Implement secure password policy</td>
+    <td>9. Set up WordPress website</td>
  </tr>
    <tr>
-    <td>- Set up sudo rules</td>
-    <td>- Set up additional service</td>
+    <td>5. Set up sudo rules</td>
+    <td>10. Set up additional service</td>
  </tr>
 </table>
 
@@ -200,7 +200,7 @@ At this point, the virtual machine has a full operating system installed and ope
 
 >  "An efficient, isolated duplicate of a real computer machine." - Gerald J. Popek & Robert P. Goldberg.
 
-Before the set up and configuration of the server, some topics will be introduced for better understand and utility of the project.
+Before the set up and configuration of the server, some topics will be introduced for better comprehension and utility of the project.
 
 ___
 
@@ -210,7 +210,7 @@ Secure shell (SSH) is a cryptographic communication protocol over insecure mediu
 
 The primary goal of SSH is to secure remote login and command execution to a server or network which enable the capacity to manage, transfer and administer services inside the said network/server. This program came to replace the previoius client-server application protocols, such as <a href="https://en.wikipedia.org/wiki/Telnet">Telnet</a>, <a href="https://en.wikipedia.org/wiki/Berkeley_r-commands">rlogin</a> and <a href="https://en.wikipedia.org/wiki/Remote_Shell">rsh</a>. The SSH protocol at its inception in 1995 gain rapid adoption by the community and now stands as the golden standard of secure system administration.
 
-The OpenSSH, a free open-source software (FOSS) implementation, is pre-installed on the majority of Linux distributions including Rocky. The service must be running, normally as server side daemon, which makes it possible for a client (e.g. user's local machine) innitiate a connection over <a href="">Transmission Control Protocol</a> (TCP) to the server on a specific port. The default port for a SSH service is the port 22.
+The OpenSSH, a free open-source software (FOSS) implementation, is pre-installed on the majority of Linux distributions including Rocky. The service must be running, normally as server side <a href="https://en.wikipedia.org/wiki/Daemon_(computing)">daemon</a>, which makes it possible for a client (e.g. user's local machine) innitiate a connection over <a href="">Transmission Control Protocol</a> (TCP) to the server on a specific port. The default port for a SSH service is the port 22.
 
 The architecture of SSH is organized as a layered architecture. This design provides modularity, flexibily and clear separation of concerns which contribute to the maintance, robustness and security. There are three main layers that build on top of each other, the first one is the <a href="https://www.rfc-editor.org/rfc/rfc4253">transport layer protocol</a>, the second is the user authentication protocol and the Connection Protocol. 
 
@@ -242,7 +242,74 @@ ___
 
 ### SSH Setup
 
+First step in setting up the SSH service on port 4242 is to download the tools to manage the SELinux rules and policy. Start by installing the selinux-policy-targeted package which provides the semanage command:
 
+<code>dnf install selinux-policy-targeted</code>
+
+<code>dnf install policycoreutils-python-utils</code>
+
+With these utilities installed, now it is possible to add port 4242 to the right type and context. Run the following command:
+
+<code>semanage port -a -t ssh_port_t -p tcp 4242</code>
+
+List the ports types in the SELinux type and verify that port 4242 was correctly added. The output of the following command must be similar to Figure 11.
+
+<code>semanage port -l | grep ssh</code>
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install16.png" width=50% height=50% alt="semanage commands">
+</p>
+<p align="center">
+    <em>Figure 11: semanage commands.</em>
+</p>
+
+Generate a SSH key pair for the VM. This is the standard process, use the ssh-keygen command and follow the instructions prompted by the program.
+
+<code>ssh-keygen -t rsa</code>
+
+Navigate to the <i>/etc/ssh/sshd_config</i> file to edit the default configuration of the ssh service. Read through the file and find the line which contain the port number, if you have not edited this file before it will be set to the default port.
+
+Also in this file, change the permission for root login by setting it to 'no'. The final document after modification is presented in Figure 12 below:
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install17.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 12: edited ssh config file.</em>
+</p>
+
+For the last step, the port 4242 must be open over tcp by the firewalld program. Use the next command to add permanently (on disk) the 4242 port:
+
+<code>firewall-cmd --permanent --add-port=4242/tcp</code>
+
+NOTE: the command need super user level access for it to be used.
+
+In case of the necessity to remove a certain port, just substitute the --add-port in the command above to --remove-port.
+
+Check if the configuration was successful with the first command below, shown in Figure 13, and check all the services and ports available with the second command:
+
+<code>firewall-cmd --list-port</code>
+
+<code>firewall-cmd --list-all</code>
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install18.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 13: firewall config check.</em>
+</p>
+
+Verify the status of the service with the systemctl utility command. The SSH service probably will be already running, but in case there is a problem or it is disable, use:
+
+<code>systemctl status sshd</code>
+
+<code>systemctl start sshd</code>
+
+<code>systemctl enable sshd</code>
+
+NOTE: this command will be useful throughout the journey in system administration, it is possible to list more than one service at a time, just list the services to be checked one after the other separated by spaces like so:
+
+<code>systemctl status service_name_1 service_name_2 service_name_3</code>
 
 ### Hostname
 
