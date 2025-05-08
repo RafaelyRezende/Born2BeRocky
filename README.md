@@ -6,7 +6,7 @@
 
 This is a guide through the essential concepts and steps to completing 42 project Born2beroot with Rocky Linux.
 
-<a href="https://rockylinux.org/">Rocky Linux</a> is a distribution stems from CentOS since its discontinued development. The original co-founder of <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> took on the responsability of carrying on the initial goal of a community-driven, enterprise level operating system for development. The project is now hosted by <a href="https://www.resf.org/about">Rocky Enterprise Software Foundation</a>.
+<a href="https://rockylinux.org/">Rocky Linux</a> is a distribution which stems from CentOS since its discontinued development. The original co-founder of <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> took on the responsability of carrying on the initial goal of a community-driven, enterprise level operating system for development. The project is now hosted by <a href="https://www.resf.org/about">Rocky Enterprise Software Foundation</a>.
 
 Rocky established itself as a downstream build of its upstream vendor <a href="https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux">Red Hat Enterprise Linux</a>. 
 
@@ -173,18 +173,22 @@ Create a user <strong>without</strong> administrative powers (this will be set u
 
 After the final reboot of the installation, decrypt the disk and enter the user login and password to access the server. At this stage, a serie of actions must be completed to make the server secure and operational with different types of services. A list of the objectives is shown below:
 
->  <ol>
->    <li>Set up SSH service</li>
->    <li>Change hostname</li>
->    <li>Create groups and users</li>
->    <li>Implement secure password policy</li>
->    <li>Set up sudo rules</li>
->    <li>Create bash script</li>
->    <li>Set up lighttpd service</li>
->    <li>Set up mariadb service</li>
->    <li>Set up WordPress website</li>
->    <li>Set up additional service</li>
->  </ol>
+  <ul>
+    <li>Set up SSH service</li>
+    <li>Change hostname</li>
+    <li>Create groups and users</li>
+    <li>Implement secure password policy</li>
+    <li>Set up sudo rules</li>
+    <li>Create bash script</li>
+    <li>Set up lighttpd service</li>
+    <li>Set up mariadb service</li>
+    <li>Set up WordPress website</li>
+    <li>Set up additional service</li>
+  </ul>
+
+At this point, the virtual machine has a full operating system installed and operational. The VM harness the processing power, memory, disk and other physical resources from the host hardware. "An entire OS-level virtualization enables multiple isolated and secure cirtualized servers to run using only a single physical server" (<a href="https://en.wikipedia.org/wiki/Virtual_machine">source here</a>). Virtual Machine can be defined as:
+
+>  "An efficient, isolated duplicate of a real computer machine." - Gerald J. Popek & Robert P. >  Goldberg
 
 Before the set up and configuration of the server, some topics will be introduced for better understand and utility in the evaluation of the project.
 
@@ -192,7 +196,7 @@ Before the set up and configuration of the server, some topics will be introduce
 
 Security-Enhanced Linux is a security layer built mixed with the kernel in some GNU/Linux distributions for, you guessed, enhanced security over sensitive data and processes. It was developed in a joint colaboration between linux developers and the National Security Agency (NSA). The feature allows administrators to have advanced and fine granied control over the access and permissions of the system.
 
-It uses <a href="https://en.wikipedia.org/wiki/Mandatory_access_control">Mandatory Access Control</a> (MAC) security policies, a set of rules for deciding what can and can not be accessed, to enforce the policy of entry of allowed users, permissions, services connectivity and more. In a situation where a subject, term used to categorized applications or processess, makes a request to access an object, for example a file or a directory, SELinux guarantee such subject has the permission to modify, read or write such object by checking the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-introduction-selinux_architecture">access vector cache</a> (AVC). The said permissions context are loaded into a cache at boot time.
+It uses <a href="https://en.wikipedia.org/wiki/Mandatory_access_control">Mandatory Access Control</a> (MAC) security policies, a set of rules for deciding what can and can not be accessed, to enforce the policy of entry for allowed users, file/directory permissions, services connectivity and more. In a situation where a subject, term used to categorized applications or processess, makes a request to access an object, for example a file or a directory, SELinux guarantee such subject has the permission to modify, read or write such object by checking the <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/selinux_users_and_administrators_guide/sect-security-enhanced_linux-introduction-selinux_architecture">access vector cache</a> (AVC). The said permissions context are loaded into a cache at boot time.
 
 SELinux can run in three different modes of operation. The default is the enforcing mode, the recommended mode, where the policies apllied follow the labels loaded in cache. Verify the status of SELinux with the command:
 
@@ -204,7 +208,13 @@ If the status of SELinux needs to be modified temporarily the following command 
 
 ### Firewalld
 
-### SSH
+### Secure Shell
+
+Secure shell (SSH) is a cryptographic communication protocol over insecure mediums. It enable secure remote access to computers and servers, over the internet. This is the service that allow developers to work from home, administer networks and servers from a distance in some third world beach around the world.
+
+The primary goal of SSH is to secure remote login and command execution to a server or network which enable the capacity to manage, transfer and administer services inside the said network/server. This program came to replace the previoius client-server application protocols, such as <a href="https://en.wikipedia.org/wiki/Telnet">Telnet</a>, <a href="https://en.wikipedia.org/wiki/Berkeley_r-commands">rlogin</a> and <a href="https://en.wikipedia.org/wiki/Remote_Shell">rsh</a>. The SSH protocol at its inception in 1995 gain rapid adoption by the community and now stands as the golden standard of secure system administration.
+
+The OpenSSH, a free open-source software (FOSS) implementation, is pre-installed on the majority of Linux distributions including Rocky. The service must be running, normally as server side daemon, which makes it possible for a client (e.g. user's local machine) innitiate a connection over <a href="">Transmission Control Protocol</a> (TCP) to the server on a specific port. The default port for a SSH service is the port 22.
 
 ### Hostname
 
@@ -212,7 +222,7 @@ At server installation the default name for the machine is localhost, in order t
 
 <code>hostnamectl set-hostname newhostname</code>
 
-NOTE: A reboot is necessary to see if the changes are permanent.
+NOTE: A reboot is necessary to see if the changes are permanent. Also, changing the hostname can lead to problems with services that utilize the hostname as a parameter in configuration files.
 
 ### Users and Groups
 
