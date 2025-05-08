@@ -173,18 +173,28 @@ Create a user <strong>without</strong> administrative powers (this will be set u
 
 After the final reboot of the installation, decrypt the disk and enter the user login and password to access the server. At this stage, a serie of actions must be completed to make the server secure and operational with different types of services. A list of the objectives is shown below:
 
-  <ul>
-    <li>Set up SSH service</li>
-    <li>Change hostname</li>
-    <li>Create groups and users</li>
-    <li>Implement secure password policy</li>
-    <li>Set up sudo rules</li>
-    <li>Create bash script</li>
-    <li>Set up lighttpd service</li>
-    <li>Set up mariadb service</li>
-    <li>Set up WordPress website</li>
-    <li>Set up additional service</li>
-  </ul>
+<table border="5">
+ <tr>
+    <td>- Set up SSH service</td>
+    <td>- Create bash script</td>
+ </tr>
+ <tr>
+    <td>- Change hostname</td>
+    <td>- Set up lighttpd service</td>
+ </tr>
+ <tr>
+    <td>- Create groups and users</td>
+    <td>- Set up mariadb service</td>
+ </tr>
+   <tr>
+    <td>- Implement secure password policy</td>
+    <td>- Set up WordPress website</td>
+ </tr>
+   <tr>
+    <td>- Set up sudo rules</td>
+    <td>- Set up additional service</td>
+ </tr>
+</table>
 
 At this point, the virtual machine has a full operating system installed and operational. The VM harness the processing power, memory, disk and other physical resources from the host hardware. "An entire OS-level virtualization enables multiple isolated and secure cirtualized servers to run using only a single physical server" (<a href="https://en.wikipedia.org/wiki/Virtual_machine">source here</a>). Virtual Machine can be defined as:
 
