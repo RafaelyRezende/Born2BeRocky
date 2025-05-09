@@ -165,7 +165,7 @@ Now all the logical volumes and primary partition can be reformated and mounted 
     <em>Figure 10.</em>
 </p>
 
-NOTE: the swap volume has a unique filesystem type.
+<strong>NOTE</strong>: the swap volume has a unique filesystem type.
 
 Create a user <strong>without</strong> administrative powers (this will be set up inside the server) and create a root password for the super user. Begin installation.
 
@@ -263,7 +263,7 @@ List the ports types in the SELinux type and verify that port 4242 was correctly
     <em>Figure 11: semanage commands.</em>
 </p>
 
-Generate a SSH key pair for the VM. This is the standard process, use the ssh-keygen command and follow the instructions prompted by the program.
+Generate a SSH key pair for the VM. This is the standard process of creating a public-private key, use the <code>ssh-keygen</code> command and follow the instructions prompted by the program. The SSH key allow the server to stablish a remote secure connection with asymmetric cryptography. 
 
 <code>ssh-keygen -t rsa</code>
 
@@ -282,7 +282,7 @@ For the last step, the port 4242 must be open over tcp by the firewalld program.
 
 <code>firewall-cmd --permanent --add-port=4242/tcp</code>
 
-NOTE: the command need super user level access for it to be used.
+<strong>NOTE</strong>: the command need super user level access for it to be used.
 
 In case of the necessity to remove a certain port, just substitute the --add-port in the command above to --remove-port.
 
@@ -299,7 +299,7 @@ Check if the configuration was successful with the first command below, shown in
     <em>Figure 13: firewall config check.</em>
 </p>
 
-Verify the status of the service with the systemctl utility command. The SSH service probably will be already running, but in case there is a problem or it is disable, use:
+Verify the status of the service with the <a id="anchor-sys">systemctl</a> utility command. The SSH service probably will be already running, but in case there is a problem or it is disable, use:
 
 <code>systemctl status sshd</code>
 
@@ -307,7 +307,7 @@ Verify the status of the service with the systemctl utility command. The SSH ser
 
 <code>systemctl enable sshd</code>
 
-NOTE: this command will be useful throughout the journey in system administration, it is possible to list more than one service at a time, just list the services to be checked one after the other separated by spaces like so:
+<strong>NOTE</strong>: this command will be useful throughout the journey in system administration, it is possible to list more than one service at a time, just list the services to be checked one after the other separated by spaces like so:
 
 <code>systemctl status service_name_1 service_name_2 service_name_3</code>
 
@@ -317,7 +317,7 @@ At server installation the default name for the machine is localhost, in order t
 
 <code>hostnamectl set-hostname newhostname</code>
 
-NOTE: A reboot is necessary to see if the changes are permanent. Also, changing the hostname can lead to problems with services that utilize the hostname as a parameter in configuration files.
+<strong>NOTE</strong>: A reboot is necessary to see if the changes are permanent. Also, changing the hostname can lead to problems with services that utilize the hostname as a parameter in configuration files.
 
 ### Users and Groups
 
@@ -325,7 +325,7 @@ This is one of the core requirements for being a system administrator. The opera
 
 <code>useradd -u 4242 -d /home/username -m username</code>
 
-Some useful flags are the -u flag to set an specific user ID number, the -d flag sets the path of the home directory for the new user (in case the default directory is not desirable) and -m creates the home directory. NOTE: if you want to set up default files/directories inside the user's home directory when creating a new user, add the necessary files in the <i>/etc/skel</i> directory.
+Some useful flags are the -u flag to set an specific user ID number, the -d flag sets the path of the home directory for the new user (in case the default directory is not desirable) and -m creates the home directory. <strong>NOTE</strong>: if you want to set up default files/directories inside the user's home directory when creating a new user, add the necessary files in the <i>/etc/skel</i> directory.
 
 Together with the username of an user, a password needs to be set in place for the user to access the server. This can be achieved with the command:
 
@@ -353,11 +353,18 @@ The -a flag stands for append and the -G flag tells the usermod command to edit 
 
 ### Secure Password Policy
 
-The server must have a strict password policy in place. The passwords in the server must have a maximum number of days in use, a minimum amount of days between password changes and a number of days warning before a password expires. This specifications can be edited in the <i>/etc/login.defs</i>.
+The server must have a strict password policy in place. The passwords in the server must have a maximum number of days in use, a minimum amount of days between password changes and a number of days warning before a password expires. This specifications can be edited in the <i>/etc/login.defs</i>, shown in Figure 14 below:
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install21.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 14: login.defs final edit.</em>
+</p>
 
 Configure the password minimum characters length and other rules in the <i>/etc/security/pwquality.conf</i> file, follow the instruction in it.
 
-Navigate to the <i>/etc/pam.d/system-auth</i> and <i>/etc/pam.d/password-auth</i> to update the password settings on <strong>both files</strong>. In the following line, add the following instructions:
+Navigate to the <i>/etc/pam.d/system-auth</i> and <i>/etc/pam.d/password-auth</i> to update the password settings on <strong>both files</strong>. In the following line, if there are more configurations on the file just add to them the following parameters instructions:
 
 <code>password    requisite    pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type= minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 difok=3 reject_username enforce_for_root</code>
 
@@ -365,10 +372,57 @@ Modify the following line to enforce history checks.
 
 <code>password    sufficient    pam_unix.so remember=7</code>
 
-NOTE: Reset all the passwords to comply with the new policy and check if the rules are being enforced.
+Alternatively, since these files use the pam_pwquality.so file to load the requisites, by editing the file <i>/etc/security/pwquality.conf</i> the same goal can achieved. For this method, read through the commentaries and check the final configuration file will look something like the Figure 15.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install20.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 15: pwquality file config.</em>
+</p>
 
 ### Sudo Configuration
 
-The policy for the sudo command is editted in the <i></i>
+The policy for the sudo command is editted in the <i>/etc/sudoers</i> file, however modifying this file raw with the text editor of your choice can make the system brake if wrong modifications are done and there are syntax errors, for example. So, use the command:
 
-<code>visudo</code> command opens the /etc/sudoers file in our system where you can edit for specific permissions and configuration.
+<code>visudo</code>
+
+This 'visudo' command opens the <i>/etc/sudoers</i> file where it can edit for specific permissions and configuration safely. Now, add or edit the following lines:
+
+<code>Defaults      passwd_tries=3</code>
+
+<code>Defaults      log_input</code>
+
+<code>Defaults      log_output</code>
+
+<code>Defaults      iolog_dir=/var/log/sudo/</code>
+
+<code>Defaults      logfile=/var/log/sudo/sudo.log</code>
+
+<code>Defaults      requiretty</code>
+
+<code>Defaults      secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"</code>
+
+The expected file configuration must be similar to the Figure 16, shown bellow:
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install22.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 16: visudo config file.</em>
+</p>
+
+<strong>NOTE</strong>: Reset all the passwords to comply with the new policy and check if the rules are being enforced.
+
+### Monitor & Verify
+
+The main goal of this section is to introce the reader to the bash scripting language although it will not in depth about the particularities of the language or either specifically explain each command used in the script for the contents of these subjects can spawn guides of their own. I suggest using the 'man' command line utility to search specific terminal commands used to fetch the necessary information and process it.
+
+Beyond the script to monitor system specifications and resources usage, there is the need to schedule such task so it can be automated. As the system administrator of the server, there is the need of "programatically schedule tasks to be executed at specific intervals" (<a href="https://www.redhat.com/en/blog/linux-cron-command">source</a>). This tasks can be regular updates, backups, system logs management or simple monitoring tasks.
+
+Check if the cronie package is installed. If not installed, run the following command:
+
+<code>dnf install cronie</code>
+
+Start the service and enable it with the 'systemctl' tool in the same way as the [SSH section](#anchor-sys).
+
