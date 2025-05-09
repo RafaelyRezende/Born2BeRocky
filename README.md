@@ -299,7 +299,7 @@ Check if the configuration was successful with the first command below, shown in
     <em>Figure 13: firewall config check.</em>
 </p>
 
-Verify the status of the service with the <a id="anchor-sys">systemctl</a> utility command. The SSH service probably will be already running, but in case there is a problem or it is disable, use:
+Verify the status of the service with the systemctl utility command. The SSH service probably will be already running, but in case there is a problem or it is disable, use:
 
 <code>systemctl status sshd</code>
 
@@ -424,5 +424,5 @@ Check if the cronie package is installed. If not installed, run the following co
 
 <code>dnf install cronie</code>
 
-Start the service and enable it with the 'systemctl' tool in the same way as the [SSH section](#anchor-sys).
+Start the service and enable it with the 'systemctl' tool in the same way as the [SSH section](#SSH-Setup).
 
