@@ -424,5 +424,10 @@ Check if the cronie package is installed. If not installed, run the following co
 
 <code>dnf install cronie</code>
 
-Start the service and enable it with the 'systemctl' tool in the same way as the [SSH section](#SSH-Setup).
+Start the service and enable it with the 'systemctl' tool in the same way as the [SSH section](#ssh-setup).
 
+<code>systemctl start crond</code>
+
+<code>systemctl enable crond</code>
+
+Once the service start, edit the 
