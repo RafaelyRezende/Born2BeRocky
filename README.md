@@ -37,8 +37,6 @@ When all of us got together to decide which distribution we would pick for this 
 
 I salute my fellow friends, more to us like these I wish.
 
----
-
 Points of contact:
 
 Alex Barbosa Felix Da Silva -> alebarbo@student.42porto.com
