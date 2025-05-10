@@ -481,5 +481,8 @@ Lighttpd is an open-source, secure, lightweight and fast web server optmized for
 
 ### MariaDB
 
-Another open source software, focused on the free availability of a relational databse that can perform with standard proprietary databases. Also, it is built for permance and stability, with integrated cloud services and compatibility features with Oracle Database and Temporal Data Tables. It is a fork of the MySQL relational database, created bu the original developers of MySQL, after its acquisition by Oracle Corporation.
+Another open source software, focused on the free availability of a relational databse that can perform with standard proprietary databases. Also, it is built for permance and stability, with integrated cloud services and compatibility features with <a href="https://www.oracle.com/database/">Oracle Database</a> and <a href="https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables?view=sql-server-ver16">Temporal Data Tables</a>. It is a fork of the <a href="https://www.mysql.com/">MySQL</a> relational database, created bu the original developers of MySQL, after its acquisition by oracle <a href="https://en.wikipedia.org/wiki/Oracle_Corporation">Oracle Corporation</a>.
 
+### PHP
+
+Personal Home Page (Hypertext Preprocessor) is a server-side scripting language.
