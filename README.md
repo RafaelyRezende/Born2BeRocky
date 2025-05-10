@@ -546,3 +546,27 @@ In sequence, set up the lighttpd service by starting and enabling the service wi
 
 <code>systemctl enable lighttpd</code>
 
+Initialize the MariaDB service with the following command:
+
+<code>systemctl enable --now mariadb</code>
+
+Use the next command to safely start your installation. This command will prompt a series of options, follow the instructions and enter in the database.
+
+<code>mysql_secure_installation</code>
+
+Enter the MariaDB program and create a new database. Afterwards, create a new user and give it all the privileges.
+
+>  CREATE DATABASE database42;
+>  CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+>  GRANT ALL PRIVILEGES ON database42.* TO 'user'@'localhost';
+>  FLUSH PRIVILEGES;
+>  EXIT;
+
+With MariaDB and Lighttpd configured and running, the service to connect it all and finish with the WordPress website is the configuration of the 'PHP-FPM', Figure 20. Navigate to the <i>/etc/php-fpm.d/www.conf</i> file and edit the 'user', 'group' fields to be equal to 'lighttpd', the 'listen' field to be '127.0.0.1:9000', and add 'lighttpd' to 'listen.acl_users' (if there are more services listed in this field like apache and nginx, remove them).
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install26.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 20: php-fpm configuration file.</em>
+</p>
