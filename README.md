@@ -609,3 +609,15 @@ Finally, for the set up of a WordPress website. Download from the WP website the
 Now it should be possible to access in the browser the website configuration page of WordPress by entering the IP address of the server with the directory created, for example http://10.11.242.240/wp_dir. Follow the steps propmt in the webpage and input the MariaDB database created in the previous steps.
 
 <strong>NOTE</strong>: if you have any issue, go to the documentation of the service you are having problems, another way to check is seeing the logs of the console or by disabling SELinux enforcing temporarily.
+
+### Extra Service
+
+All the required services are now installed and running, the only thing left to be incorporated into the server is the additional service of your choice! I installed and set up an e-mail service, however you can choose and pick any service that would be useful in a server. This could be a monitoring service such as <a href="https://idroot.us/install-prometheus-rocky-linux-9/">Prometheus</a> or <a href="https://www.linuxboost.com/how-to-install-logwatch-on-rocky-linux/">Logwatch</a>, a service to improve even further the security of the server like Fail2ban, a backup solution for efficient backup, encryption and automation, as <a href="https://linuxconfig.org/how-to-create-secure-and-efficient-backups-with-restic">Restic</a>/<a href="https://installati.one/install-borgbackup-rockylinux-8/">BorgBackup</a>, or another communication protocol such as <a href="https://www.linuxteck.com/how-to-set-up-ftp-server-in-rocky-linux/">FTP</a>, <a href="https://bio-famous.com/how-to-install-and-configure-ipfs-on-linux-system/">IPFS</a>, ...
+
+## Wrap up
+
+By now, if you have reached this far into the document, you can consider yourself brave and full of endurence. I hope you have learned useful knowledge for your programming walk and if I wrote outright wrong information or innacurate takes, please issue a ticket for me to correct it!
+
+<strong>Thank you for taking your time to read this document/guide.</strong>
+
+If you have any doubts or suggestions for improving the guide, please, reach me in a email.
