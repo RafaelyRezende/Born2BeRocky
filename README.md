@@ -485,7 +485,7 @@ Another open source software, focused on the free availability of a relational d
 
 ### PHP
 
-Personal Home Page (Hypertext Preprocessor) is primarily a server-side scripting language. As a C-based programming language, it is high performance, integrates with the most common web servers and has an extensive library of built-in functions and extensions that facilitates web development. The PHP programming language is the backbone of Content Management Systems (CMS) such as WordPress, Joomla, Drupal. It also has a high performance when dealing with dynamic websites that heavily rely on database connection, user interaction and dynamic content display.
+<a href="https://www.php.net/">Personal Home Page</a> (Hypertext Preprocessor) is primarily a server-side scripting language. As a C-based programming language, it is high performance, integrates with the most common web servers and has an extensive library of built-in functions and extensions that facilitates web development. The PHP programming language is the backbone of <a href="https://en.wikipedia.org/wiki/Content_management_system">Content Management Systems</a> (CMS) such as <a href="https://wordpress.org/php">WordPress</a>, Joomla, Drupal. It also has a high performance when dealing with dynamic websites that heavily rely on database connection, user interaction and dynamic content display.
 
 The setup of the PHP and the fastCGI module is requisite for the integration with MariaDB and WordPress.
 
@@ -494,4 +494,55 @@ The setup of the PHP and the fastCGI module is requisite for the integration wit
 A Content Management System where the user can edit, administer and manage a webpage in a graphical interface.
 
 ## Full Stack Setup
+
+Install the <a href="https://linuxreviews.org/The_Extra_Packages_for_Enterprise_Linux_(EPEL)_repository">Extra Package for Enterprise Linux</a> (EPEL) which contains the tools to connect to other open-source repositories. Use the command bellow and afterwards install the necessary packages for all the above server services.
+
+<code>sudo dnf install epel-release</code>
+
+<code>dnf install -y lighttpd lighttpd-fastcgi mariadb mariadb-server php php-mysqlnd php-fpm php-gd php-xml php-mbstring wget unzip</code>
+
+In sequence, set up the lighttpd service by starting and enabling the service with the systemctl command tool.
+
+<code>systemctl start lighttpd</code>
+
+<code>systemctl enable lighttpd</code>
+
+Next, edit the configuration file for the lighttpd service, path of said file is <i>/etc/lighttpd/lighttpd.conf</i>. The configuration file must be ismilar to Figure 19. Check the 'server.bind' IP address (it must be the IP of the VM) and add the this line to include the 'fastcgi.conf' file for the next steps (this line probaly will be commented out, it can be just uncommented).
+
+<code>include "conf.d/fastcgi.conf"</code>
+
+Edit the modules files of lighttpd, <i>/etc/lighttpd/modules.conf</i>, add "mod_fastcgi" under "mod_access".
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install25.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 19: lighttpd configuration.</em>
+</p>
+
+Open the port, listed in the configuration file above, in the firewall and reload it.
+
+<code>firewall-cmd --permanent --add-service=http</code>
+
+<code>firewall-cmd --reload</code>
+
+Manage the SELinux context types:
+
+<code>semanage permissive -a httpd_t</code>
+
+Edit <i>/etc/lighttpd/conf.d/fastcgi.conf</i> and put the following at the bottom of the file:
+
+>  fastcgi.server += ( ".php" =>
+>      ((
+>          "host" => "127.0.0.1",
+>          "port" => "9000",
+>          "broken-scriptfilename" => "enable"
+>      ))
+>  )
+
+In sequence, set up the lighttpd service by starting and enabling the service with the systemctl command tool.
+
+<code>systemctl start lighttpd</code>
+
+<code>systemctl enable lighttpd</code>
 
