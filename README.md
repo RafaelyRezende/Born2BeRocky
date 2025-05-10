@@ -435,6 +435,13 @@ The script in bash should look something like Figure 17. The important commands 
 | lsblk      | List block devices.                                                                                                                                                                                                  |
 | journalctl | Query the systemd journal.    
 
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install23.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 17: monitoring script example template.</em>
+</p>
+
 Check if the cronie package is installed. If not installed, run the following command:
 
 <code>dnf install cronie</code>
@@ -452,3 +459,27 @@ Once the service start, edit the cron cofiguration file and add the script to be
 The syntax of cron is simple yet it can cause some confusion the first time you see it. A cron job can be scheduled by utilizing the following syntax: "* * * * * bash /path/to/some/script.sh". Each asterisk represent one field of time, minutes, hours, day of the month, month, day of the week, respectively. The asterisk means expand to all values for the field, the comma can be used as a list separator, the '-' as a range separator and '/' as a step for ranges. For example, schedule a job to run the 'annoying_script.sh', located at <i>/usr/local/bin/</i>, every 5 minutes of every monday of April: 
 
 <code>*/5 * * 4 1 bash /usr/local/bin/annoying_script.sh</code>
+
+## Mandatory Check
+
+Run the commands following commands and make sure it is consonant with Figure 18.
+
+<strong>NOTE</strong>: If there is another service running on port 323 of the server, disable it the same way any other service would be stopped and disabled.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install24.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 18: verification commands and outputs.</em>
+</p>
+
+## Bonus Services
+
+### Lighttpd
+
+Lighttpd is an open-source, secure, lightweight and fast web server optmized for high-performance environments with a low memory footprint and minimum CPU load. This software is suitable for static web pages and server that have issues with load problems. It support a wide range of features such as <a href="https://en.wikipedia.org/wiki/Load_balancing_(computing)">load balacing</a>, <a href="https://en.wikipedia.org/wiki/FastCGI">FastCGI</a>, <a href="https://en.wikipedia.org/wiki/Proxy_server#Web_proxy_servers">HTTP proxy</a>, <a href="https://en.wikipedia.org/wiki/WebSocket">WebScokets</a> and <a href="https://en.wikipedia.org/wiki/Lighttpd">more</a>.The documentation of the lighttpd server can be found <a href="https://redmine.lighttpd.net/projects/lighttpd/wiki">here</a> if any problem arises.
+
+### MariaDB
+
+Another open source software, focused on the free availability of a relational databse that can perform with standard proprietary databases. Also, it is built for permance and stability, with integrated cloud services and compatibility features with Oracle Database and Temporal Data Tables. It is a fork of the MySQL relational database, created bu the original developers of MySQL, after its acquisition by Oracle Corporation.
+
