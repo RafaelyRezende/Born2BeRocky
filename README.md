@@ -420,6 +420,21 @@ The main goal of this section is to introce the reader to the bash scripting lan
 
 Beyond the script to monitor system specifications and resources usage, there is the need to schedule such task so it can be automated. As the system administrator of the server, there is the need of "programatically schedule tasks to be executed at specific intervals" (<a href="https://www.redhat.com/en/blog/linux-cron-command">source</a>). This tasks can be regular updates, backups, system logs management or simple monitoring tasks.
 
+The script in bash should look something like Figure 17. The important commands that will be used to fetch the necessary information are: 
+
+| Command    | Description                                                                                                                                                                                                          |
+|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| uname      | Print some system information.                                                                                                                                                                                       |
+| lscpu      | Display information about the CPU architecture.                                                                                                                                                                      |
+| free       | Display the total amount of free and used physical and swap memory in the system.                                                                                                                                    |
+| df         | Display the amount of disk space available on the file system containing each file argument.                                                                                                                         |
+| top        | It provides a dynamic real-time view of a running system. It can display system summary information.                                                                                                                 |
+| uptime     | Give a one line display of the following information. The current time, how long the system has been running, how many users are currently logged on, and the system load averages for the past 1, 5 and 15 minutes. |
+| ip         | show/manipulate routing, network devices, interfaces and tunnels.                                                                                                                                                    |
+| ss         | Another utility to investigate sockets, used to dump socket statistics.                                                                                                                                              |
+| lsblk      | List block devices.                                                                                                                                                                                                  |
+| journalctl | Query the systemd journal.    
+
 Check if the cronie package is installed. If not installed, run the following command:
 
 <code>dnf install cronie</code>
@@ -430,4 +445,10 @@ Start the service and enable it with the 'systemctl' tool in the same way as the
 
 <code>systemctl enable crond</code>
 
-Once the service start, edit the 
+Once the service start, edit the cron cofiguration file and add the script to be run. Access the cron file through the following command:
+
+<code>crontab -e</code>
+
+The syntax of cron is simple yet it can cause some confusion the first time you see it. A cron job can be scheduled by utilizing the following syntax: "* * * * * bash /path/to/some/script.sh". Each asterisk represent one field of time, minutes, hours, day of the month, month, day of the week, respectively. The asterisk means expand to all values for the field, the comma can be used as a list separator, the '-' as a range separator and '/' as a step for ranges. For example, schedule a job to run the 'annoying_script.sh', located at <i>/usr/local/bin/</i>, every 5 minutes of every monday of April: 
+
+<code>*/5 * * 4 1 bash /usr/local/bin/annoying_script.sh</code>
