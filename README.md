@@ -33,6 +33,24 @@
 
 ## Prelude
 
+Before you dive deep into this project, I want to say a few words about the people that helped and collaborated on this project...
+
+When all of us got together to decide which distribution we would pick for this project, I was the only one that consider it, out of pure stupidity and ignorance. I did not know what the project was about and did not know the amount of work it would take for it to be completed. I was immensely lucky to have <strong>Alex Barbosa Felix Da Silva</strong>, <strong>Júlio César Santos Souza</strong> and <strong>Nicholas Saraiva Arruda Serafim</strong>, joining together with me to tackle the project. I would not even got to the installation screen without their help and insights. In true 42 spirit and collaboration, I can say for sure that we all learned greatly from the whole experience and I wish for you reading this all the same (if possible even pass it on).
+
+I salute my fellow friends, more to us like these I wish.
+
+---
+
+Points of contact:
+
+Alex Barbosa Felix Da Silva -> alebarbo@student.42porto.com
+
+<a href="https://github.com/JulioSouza09">Júlio César Santos Souza</a> -> jcesar-s@student.42porto.com
+
+<a href="https://github.com/CafeComLag">Nicholas Saraiva Arruda Serafim</a> -> nsaraiva@student.42porto.com
+
+---
+
 ## Rocky OS Install
 
 <a href="https://rockylinux.org/">Rocky Linux</a> is a distribution which stems from CentOS since its discontinued development. The original co-founder of <a href="https://en.wikipedia.org/wiki/CentOS">CentOS</a> took on the responsability of carrying on the initial goal of a community-driven, enterprise level operating system for development. The project is now hosted by <a href="https://www.resf.org/about">Rocky Enterprise Software Foundation</a>.
