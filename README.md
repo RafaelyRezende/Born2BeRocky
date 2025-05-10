@@ -562,11 +562,32 @@ Enter the MariaDB program and create a new database. Afterwards, create a new us
 >  FLUSH PRIVILEGES;
 >  EXIT;
 
-With MariaDB and Lighttpd configured and running, the service to connect it all and finish with the WordPress website is the configuration of the 'PHP-FPM', Figure 20. Navigate to the <i>/etc/php-fpm.d/www.conf</i> file and edit the 'user', 'group' fields to be equal to 'lighttpd', the 'listen' field to be '127.0.0.1:9000', and add 'lighttpd' to 'listen.acl_users' (if there are more services listed in this field like apache and nginx, remove them).
+With MariaDB and Lighttpd configured and running, the service to connect it all and finish with the WordPress website is the configuration of the 'PHP-FPM', Figure 20. Navigate to the <i>/etc/php-fpm.d/www.conf</i> file and edit the 'user', 'group' fields to be equal to 'lighttpd', the 'listen' field to be '127.0.0.1:9000', add 'lighttpd' to 'listen.acl_users' (if there are more services listed in this field like apache and nginx, remove them), and 'listen.allow_clients' to be equal to '127.0.0.1'.
+
+If you are using VIM (as you should), the configuration to be edited are in lines 24, 26, 38, 55, 64, respectvely.
 
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install26.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 20: php-fpm configuration file.</em>
+    <em>Figure 20: php-fpm configuration file part 1.</em>
 </p>
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install27.png" width=50% height=50% alt="ssh config file.">
+</p>
+<p align="center">
+    <em>Figure 21: php-fpm configuration file part 2.</em>
+</p>
+
+Finally, for the set up of a WordPress website. Download from the WP website the latest tar with the configuration files needed to the /tmp directory. Next, create a directory on the <i>/var/www/lighttpd/</i> directory to be used to hold the WordPress files. Adjust the permission and the ownership of the directory and files inside it.
+
+>  cd /tmp/
+>  wget https://wordpress.org/latest.tar.gz
+>  tar -xzvf latest.tar.gz
+>  mkdir /var/www/lighttpd/wp_dir
+>  mv wordpress/* /var/www/lighttpd/wp_dir
+>  chown -R lighttpd:lighttpd /var/www/lighttpd
+>  chmod -R 775 /var/www/lighttpd
+
+Now you can access in the browser the website configuration and editing of the 
