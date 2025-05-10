@@ -532,13 +532,15 @@ Manage the SELinux context types:
 
 Edit <i>/etc/lighttpd/conf.d/fastcgi.conf</i> and put the following at the bottom of the file:
 
->  fastcgi.server += ( ".php" =>
->      ((
->          "host" => "127.0.0.1",
->          "port" => "9000",
->          "broken-scriptfilename" => "enable"
->      ))
->  )
+<br>
+
+    fastcgi.server += ( ".php" =>((
+          "host" => "127.0.0.1",
+          "port" => "9000",
+          "broken-scriptfilename" => "enable"
+      )))
+
+<br>
 
 In sequence, set up the lighttpd service by starting and enabling the service with the systemctl command tool.
 
@@ -556,11 +558,19 @@ Use the next command to safely start your installation. This command will prompt
 
 Enter the MariaDB program and create a new database. Afterwards, create a new user and give it all the privileges.
 
+<br>
+
 >  CREATE DATABASE database42;
+>
 >  CREATE USER 'user'@'localhost' IDENTIFIED BY 'password';
+>
 >  GRANT ALL PRIVILEGES ON database42.* TO 'user'@'localhost';
+> 
 >  FLUSH PRIVILEGES;
+> 
 >  EXIT;
+
+<br>
 
 With MariaDB and Lighttpd configured and running, the service to connect it all and finish with the WordPress website is the configuration of the 'PHP-FPM', Figure 20. Navigate to the <i>/etc/php-fpm.d/www.conf</i> file and edit the 'user', 'group' fields to be equal to 'lighttpd', the 'listen' field to be '127.0.0.1:9000', add 'lighttpd' to 'listen.acl_users' (if there are more services listed in this field like apache and nginx, remove them), and 'listen.allow_clients' to be equal to '127.0.0.1'.
 
@@ -583,11 +593,19 @@ If you are using VIM (as you should), the configuration to be edited are in line
 Finally, for the set up of a WordPress website. Download from the WP website the latest tar with the configuration files needed to the /tmp directory. Next, create a directory on the <i>/var/www/lighttpd/</i> directory to be used to hold the WordPress files. Adjust the permission and the ownership of the directory and files inside it.
 
 >  cd /tmp/
+> 
 >  wget https://wordpress.org/latest.tar.gz
+> 
 >  tar -xzvf latest.tar.gz
+> 
 >  mkdir /var/www/lighttpd/wp_dir
+> 
 >  mv wordpress/* /var/www/lighttpd/wp_dir
+> 
 >  chown -R lighttpd:lighttpd /var/www/lighttpd
+> 
 >  chmod -R 775 /var/www/lighttpd
 
-Now you can access in the browser the website configuration and editing of the 
+Now it should be possible to access in the browser the website configuration page of WordPress by entering the IP address of the server with the directory created, for example http://10.11.242.240/wp_dir. Follow the steps propmt in the webpage and input the MariaDB database created in the previous steps.
+
+<strong>NOTE</strong>: if you have any issue, go to the documentation of the service you are having problems, another way to check is seeing the logs of the console or by disabling SELinux enforcing temporarily.
