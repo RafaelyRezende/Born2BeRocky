@@ -485,4 +485,13 @@ Another open source software, focused on the free availability of a relational d
 
 ### PHP
 
-Personal Home Page (Hypertext Preprocessor) is a server-side scripting language.
+Personal Home Page (Hypertext Preprocessor) is primarily a server-side scripting language. As a C-based programming language, it is high performance, integrates with the most common web servers and has an extensive library of built-in functions and extensions that facilitates web development. The PHP programming language is the backbone of Content Management Systems (CMS) such as WordPress, Joomla, Drupal. It also has a high performance when dealing with dynamic websites that heavily rely on database connection, user interaction and dynamic content display.
+
+The setup of the PHP and the fastCGI module is requisite for the integration with MariaDB and WordPress.
+
+### WordPress
+
+A Content Management System where the user can edit, administer and manage a webpage in a graphical interface.
+
+## Full Stack Setup
+
