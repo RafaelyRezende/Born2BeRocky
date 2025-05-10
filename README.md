@@ -35,6 +35,8 @@ Before you dive deep into this project, I want to say a few words about the peop
 
 When all of us got together to decide which distribution we would pick for this project, I was the only one that consider it, out of pure stupidity and ignorance. I did not know what the project was about and did not know the amount of work it would take for it to be completed. I was immensely lucky to have <strong>Alex Barbosa Felix Da Silva</strong>, <strong>Júlio César Santos Souza</strong> and <strong>Nicholas Saraiva Arruda Serafim</strong>, joining together with me to tackle the project. I would not even got to the installation screen without their help and insights. In true 42 spirit and collaboration, I can say for sure that we all learned greatly from the whole experience and I wish for you reading this all the same (if possible even pass it on).
 
+Honarable mentions to Pedro Miguel Reis Neiva (prime Rocky user) and <a href="https://github.com/AlexRD-42">Alex Deimling</a> (the alpha tester for this project).
+
 I salute my fellow friends, more to us like these I wish.
 
 ---
