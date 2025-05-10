@@ -2,7 +2,34 @@
 
 <br>
 
-## Index of Contents
+## Table of Contents
+
+- [Prelude](#prelude)
+- [Rocky OS Install](#rocky-os-install)
+- [Disk Partition](#disk-partition)
+  - [Partitioning Scheme Overview](#partitionin-scheme-overview)
+  - [Filesystems and Mount Point Overview](#filesystems-and-mount-point-overview)
+  - [Logical Volume Management](#logical-volume-management)
+  - [Disk Setup](#disk-setup)
+- [Inside The Machine](#inside-the-machine)
+  - [Secure Shell](#secure-shell)
+  - [Firewalld](#firewalld)
+  - [SELinux](#selinux)
+  - [SSH Setup](#ssh-setup)
+  - [Hostname](#hostname)
+  - [Users and Groups](#users-and-groups)
+  - [Secure Password Policy](#secure-password-policy)
+  - [Sudo Configuration](#sudo-configuration)
+  - [Monitor & Verify](#monitor-&-verify)
+  - [Mandatory Check](#mandatory-check)
+- [Bonus Services](#bonus-services)
+  - [Lighttpd](#lighttpd)
+  - [MariaDB](#mariadb)
+  - [PHP](#php)
+  - [WordPress](#wordpress)
+- [Full Stack Setup](#full-stack-setup)
+  - [Extra Service](#extra-service)
+- [Wrap up](#wrap-up)
 
 ## Prelude
 
