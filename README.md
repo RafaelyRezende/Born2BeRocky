@@ -1,7 +1,5 @@
 # Born 2 Be Root
 
-<br>
-
 ## Table of Contents
 
 - [Prelude](#prelude)
