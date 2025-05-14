@@ -18,7 +18,7 @@
   - [Users and Groups](#users-and-groups)
   - [Secure Password Policy](#secure-password-policy)
   - [Sudo Configuration](#sudo-configuration)
-  - [Monitor & Verify](#monitor-&-verify)
+  - [Monitor & Verify](#monitor--verify)
   - [Mandatory Check](#mandatory-check)
 - [Bonus Services](#bonus-services)
   - [Lighttpd](#lighttpd)
@@ -282,6 +282,8 @@ If the status of SELinux needs to be modified temporarily the following command 
 ___
 
 ### SSH Setup
+
+Before starting with the set up of the SSH service, a brief explanation about the network setting of the VM VirtualBox.
 
 First step in setting up the SSH service on port 4242 is to download the tools to manage the SELinux rules and policy. Start by installing the selinux-policy-targeted package which provides the semanage command:
 
