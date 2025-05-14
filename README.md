@@ -283,7 +283,22 @@ ___
 
 ### SSH Setup
 
-Before starting with the set up of the SSH service, a brief explanation about the network setting of the VM VirtualBox.
+Before starting with the set up of the SSH service, a brief explanation about the network setting of the VM VirtualBox. Go to Settings -> Network, by the 'Attached to:' field, select a mode type for the network adapter (as in Figure 11) which will be virtualized by the VM (<a href="https://www.virtualbox.org/manual/ch06.html">source</a>). It determines how the virtual machine will connect to the host machine and broader network.
+
+Network Address Translation (NAT) and Bridge adaptor will be considered for the purpose of this project. In NAT mode, the VirtualBox program acts as a virtual router and DHCP server. The virtual machine router will be assigned an IP in a separate subnet of the host machine network, therefore the virtual machine has access to outside network but there is no direct access from the outside to the virtual machine.
+
+In Bridge adaptor mode, the VirtualBox uses a device driver on your host system that filters data from the physical network adapter. This driver serves as a filter to intercep and inject data into the physical network data stream, which effectly creates a new network interface in software. To the host machine, the newly created interface appears to be connected physically. This means that it is possible to set up routing between the guest and the rest of the host's network, it emmulates being an extended part of the same network as the host.
+
+In effect, the use of Bridge adaptor mode splifies the set and use of services that communicate with communication protocols different than TCP/UDP, as the NAT mode primarily communicates only through these suits. So, make sure which mode is currently in use and the scope of the work.
+
+<strong>NOTE</strong>: The IP of the virtual machine will change for this configuration to be in effect.
+
+<p align="center">
+  <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install28.png" width=50% height=50% alt="Installation menu">
+</p>
+<p align="center">
+    <em>Figure 11.</em>
+</p>
 
 First step in setting up the SSH service on port 4242 is to download the tools to manage the SELinux rules and policy. Start by installing the selinux-policy-targeted package which provides the semanage command:
 
@@ -295,7 +310,7 @@ With these utilities installed, now it is possible to add port 4242 to the right
 
 <code>semanage port -a -t ssh_port_t -p tcp 4242</code>
 
-List the ports types in the SELinux type and verify that port 4242 was correctly added. The output of the following command must be similar to Figure 11.
+List the ports types in the SELinux type and verify that port 4242 was correctly added. The output of the following command must be similar to Figure 12.
 
 <code>semanage port -l | grep ssh</code>
 
@@ -303,7 +318,7 @@ List the ports types in the SELinux type and verify that port 4242 was correctly
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install16.png" width=50% height=50% alt="semanage commands">
 </p>
 <p align="center">
-    <em>Figure 11: semanage commands.</em>
+    <em>Figure 12: semanage commands.</em>
 </p>
 
 Generate a SSH key pair for the VM. This is the standard process of creating a public-private key, use the <code>ssh-keygen</code> command and follow the instructions prompted by the program. The SSH key allow the server to stablish a remote secure connection with asymmetric cryptography. 
@@ -312,13 +327,13 @@ Generate a SSH key pair for the VM. This is the standard process of creating a p
 
 Navigate to the <i>/etc/ssh/sshd_config</i> file to edit the default configuration of the ssh service. Read through the file and find the line which contain the port number, if you have not edited this file before it will be set to the default port.
 
-Also in this file, change the permission for root login by setting it to 'no'. The final document after modification is presented in Figure 12 below:
+Also in this file, change the permission for root login by setting it to 'no'. The final document after modification is presented in Figure 13 below:
 
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install17.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 12: edited ssh config file.</em>
+    <em>Figure 13: edited ssh config file.</em>
 </p>
 
 For the last step, the port 4242 must be open over tcp by the firewalld program. Use the next command to add permanently (on disk) the 4242 port:
@@ -329,7 +344,7 @@ For the last step, the port 4242 must be open over tcp by the firewalld program.
 
 In case of the necessity to remove a certain port, just substitute the --add-port in the command above to --remove-port.
 
-Check if the configuration was successful with the first command below, shown in Figure 13, and check all the services and ports available with the second command:
+Check if the configuration was successful with the first command below, shown in Figure 14, and check all the services and ports available with the second command:
 
 <code>firewall-cmd --list-port</code>
 
@@ -339,7 +354,7 @@ Check if the configuration was successful with the first command below, shown in
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install18.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 13: firewall config check.</em>
+    <em>Figure 14: firewall config check.</em>
 </p>
 
 Verify the status of the service with the systemctl utility command. The SSH service probably will be already running, but in case there is a problem or it is disable, use:
@@ -396,13 +411,13 @@ The -a flag stands for append and the -G flag tells the usermod command to edit 
 
 ### Secure Password Policy
 
-The server must have a strict password policy in place. The passwords in the server must have a maximum number of days in use, a minimum amount of days between password changes and a number of days warning before a password expires. This specifications can be edited in the <i>/etc/login.defs</i>, shown in Figure 14 below:
+The server must have a strict password policy in place. The passwords in the server must have a maximum number of days in use, a minimum amount of days between password changes and a number of days warning before a password expires. This specifications can be edited in the <i>/etc/login.defs</i>, shown in Figure 15 below:
 
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install21.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 14: login.defs final edit.</em>
+    <em>Figure 15: login.defs final edit.</em>
 </p>
 
 Configure the password minimum characters length and other rules in the <i>/etc/security/pwquality.conf</i> file, follow the instruction in it.
@@ -415,13 +430,13 @@ Modify the following line to enforce history checks.
 
 <code>password    sufficient    pam_unix.so remember=7</code>
 
-Alternatively, since these files use the pam_pwquality.so file to load the requisites, by editing the file <i>/etc/security/pwquality.conf</i> the same goal can achieved. For this method, read through the commentaries and check the final configuration file will look something like the Figure 15.
+Alternatively, since these files use the pam_pwquality.so file to load the requisites, by editing the file <i>/etc/security/pwquality.conf</i> the same goal can achieved. For this method, read through the commentaries and check the final configuration file will look something like the Figure 16.
 
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install20.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 15: pwquality file config.</em>
+    <em>Figure 16: pwquality file config.</em>
 </p>
 
 ### Sudo Configuration
@@ -446,13 +461,13 @@ This 'visudo' command opens the <i>/etc/sudoers</i> file where it can edit for s
 
 <code>Defaults      secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"</code>
 
-The expected file configuration must be similar to the Figure 16, shown bellow:
+The expected file configuration must be similar to the Figure 17, shown bellow:
 
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install22.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 16: visudo config file.</em>
+    <em>Figure 17: visudo config file.</em>
 </p>
 
 <strong>NOTE</strong>: Reset all the passwords to comply with the new policy and check if the rules are being enforced.
@@ -463,7 +478,7 @@ The main goal of this section is to introce the reader to the bash scripting lan
 
 Beyond the script to monitor system specifications and resources usage, there is the need to schedule such task so it can be automated. As the system administrator of the server, there is the need of "programatically schedule tasks to be executed at specific intervals" (<a href="https://www.redhat.com/en/blog/linux-cron-command">source</a>). This tasks can be regular updates, backups, system logs management or simple monitoring tasks.
 
-The script in bash should look something like Figure 17. The important commands that will be used to fetch the necessary information are: 
+The script in bash should look something like Figure 18. The important commands that will be used to fetch the necessary information are: 
 
 | Command    | Description                                                                                                                                                                                                          |
 |------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -482,7 +497,7 @@ The script in bash should look something like Figure 17. The important commands 
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install23.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 17: monitoring script example template.</em>
+    <em>Figure 18: monitoring script example template.</em>
 </p>
 
 Check if the cronie package is installed. If not installed, run the following command:
@@ -505,7 +520,7 @@ The syntax of cron is simple yet it can cause some confusion the first time you 
 
 ## Mandatory Check
 
-Run the commands following commands and make sure it is consonant with Figure 18.
+Run the commands following commands and make sure it is consonant with Figure 19.
 
 <strong>NOTE</strong>: If there is another service running on port 323 of the server, disable it the same way any other service would be stopped and disabled.
 
@@ -513,7 +528,7 @@ Run the commands following commands and make sure it is consonant with Figure 18
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install24.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 18: verification commands and outputs.</em>
+    <em>Figure 19: verification commands and outputs.</em>
 </p>
 
 ## Bonus Services
@@ -550,7 +565,7 @@ In sequence, set up the lighttpd service by starting and enabling the service wi
 
 <code>systemctl enable lighttpd</code>
 
-Next, edit the configuration file for the lighttpd service, path of said file is <i>/etc/lighttpd/lighttpd.conf</i>. The configuration file must be ismilar to Figure 19. Check the 'server.bind' IP address (it must be the IP of the VM) and add the this line to include the 'fastcgi.conf' file for the next steps (this line probaly will be commented out, it can be just uncommented).
+Next, edit the configuration file for the lighttpd service, path of said file is <i>/etc/lighttpd/lighttpd.conf</i>. The configuration file must be ismilar to Figure 20. Check the 'server.bind' IP address (it must be the IP of the VM) and add the this line to include the 'fastcgi.conf' file for the next steps (this line probaly will be commented out, it can be just uncommented).
 
 <code>include "conf.d/fastcgi.conf"</code>
 
@@ -560,7 +575,7 @@ Edit the modules files of lighttpd, <i>/etc/lighttpd/modules.conf</i>, add "mod_
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install25.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 19: lighttpd configuration.</em>
+    <em>Figure 20: lighttpd configuration.</em>
 </p>
 
 Open the port, listed in the configuration file above, in the firewall and reload it.
@@ -615,22 +630,22 @@ Enter the MariaDB program and create a new database. Afterwards, create a new us
 
 <br>
 
-With MariaDB and Lighttpd configured and running, the service to connect it all and finish with the WordPress website is the configuration of the 'PHP-FPM', Figure 20. Navigate to the <i>/etc/php-fpm.d/www.conf</i> file and edit the 'user', 'group' fields to be equal to 'lighttpd', the 'listen' field to be '127.0.0.1:9000', add 'lighttpd' to 'listen.acl_users' (if there are more services listed in this field like apache and nginx, remove them), and 'listen.allow_clients' to be equal to '127.0.0.1'.
+With MariaDB and Lighttpd configured and running, the service to connect it all and finish with the WordPress website is the configuration of the 'PHP-FPM', Figure 21 and 22. Navigate to the <i>/etc/php-fpm.d/www.conf</i> file and edit the 'user', 'group' fields to be equal to 'lighttpd', the 'listen' field to be '127.0.0.1:9000', add 'lighttpd' to 'listen.acl_users' (if there are more services listed in this field like apache and nginx, remove them), and 'listen.allow_clients' to be equal to '127.0.0.1'.
 
-If you are using VIM (as you should), the configuration to be edited are in lines 24, 26, 38, 55, 64, respectvely.
+With the VIM text editor (as you should), the configuration to be edited are in lines 24, 26, 38, 55, 64, respectvely.
 
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install26.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 20: php-fpm configuration file part 1.</em>
+    <em>Figure 21: php-fpm configuration file part 1.</em>
 </p>
 
 <p align="center">
   <img src="https://github.com/RafaelyRezende/Born-4-2beroot/blob/main/rocky_guide/rocky_install27.png" width=50% height=50% alt="ssh config file.">
 </p>
 <p align="center">
-    <em>Figure 21: php-fpm configuration file part 2.</em>
+    <em>Figure 22: php-fpm configuration file part 2.</em>
 </p>
 
 Finally, for the set up of a WordPress website. Download from the WP website the latest tar with the configuration files needed to the /tmp directory. Next, create a directory on the <i>/var/www/lighttpd/</i> directory to be used to hold the WordPress files. Adjust the permission and the ownership of the directory and files inside it.
