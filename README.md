@@ -45,6 +45,8 @@ Alex Barbosa Felix Da Silva -> alebarbo@student.42porto.com
 
 <a href="https://github.com/CafeComLag">Nicholas Saraiva Arruda Serafim</a> -> nsaraiva@student.42porto.com
 
+It is worth noting that this guide is porpously made without straight to the awnsers instructions in case of easier/intermediate topics. The explanations for the concepts used in this project may not cover all in depth for some would require guides of their own, however there are links and references I higly suggest futher exploration. 
+
 ---
 
 ## Rocky OS Install
